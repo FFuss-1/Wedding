@@ -4,15 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Наше Весілля - 19 Липня 2026</title>
+    
+    <!-- Import elegant cursive font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+
     <style>
-        /* PASTEL AIRY PALETTE */
+        /* PASTEL AIRY PALETTE WITH COLORFUL BUTTONS */
         :root {
             --primary: #b9c9c3; 
             --primary-dark: #7a8f87; 
             --accent: #e6d6b8;  
             --text: #4a4a4a;    
             --bg: #fefdfa;      
-            --flower-pink: #e8b4b8;
+            
+            /* New Vibrant Button Colors */
+            --btn-color: #e88b9c; /* Vibrant rose pink */
+            --btn-hover: #d66b7d; /* Deeper rose pink */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,25 +37,23 @@
             overflow-x: hidden;
         }
 
-        /* --- BACKGROUND FLORAL ANIMATIONS --- */
-        .bg-flower {
+        /* --- NEW DOODLE BACKGROUND ANIMATION --- */
+        /* Uses your SVG file as a smoothly drifting wallpaper at 10% opacity */
+        body::before {
+            content: "";
             position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('vecteezy_flowers-and-leaves-elements-designed-in-doodle-style-for_7496946.svg');
+            background-size: 400px;
+            opacity: 0.12;
             z-index: -1;
-            opacity: 0; /* Starts hidden for animation */
-            animation: bloom 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            animation-delay: 0.5s;
+            pointer-events: none;
+            animation: float-bg 80s linear infinite;
         }
-        
-        .flower-top-left { top: -20px; left: -20px; width: 250px; }
-        .flower-bottom-right { bottom: -20px; right: -20px; width: 300px; transform: rotate(180deg); animation-name: bloom-rotate; }
 
-        @keyframes bloom {
-            0% { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(1); opacity: 0.5; }
-        }
-        @keyframes bloom-rotate {
-            0% { transform: scale(0.5) rotate(160deg); opacity: 0; }
-            100% { transform: scale(1) rotate(180deg); opacity: 0.5; }
+        @keyframes float-bg {
+            0% { background-position: 0 0; }
+            100% { background-position: 400px 400px; }
         }
 
         /* --- SCROLL ANIMATIONS FOR TEXT --- */
@@ -87,7 +94,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        nav a:hover { background-color: var(--primary); color: white; }
+        nav a:hover { background-color: var(--primary); color: white; border-color: var(--primary); }
 
         /* Header & Interactive Photo */
         header {
@@ -102,7 +109,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            cursor: pointer; /* Indicates it's clickable */
+            cursor: pointer; 
             margin-bottom: 20px;
         }
 
@@ -111,7 +118,6 @@
             max-width: 350px;
             height: auto;
             border-radius: 10px;
-            /* Added a soft glow for the cutout image */
             filter: drop-shadow(0px 10px 20px rgba(185, 201, 195, 0.4));
             transition: transform 0.3s ease;
         }
@@ -129,7 +135,6 @@
             margin-top: 0;
             padding: 0 15px;
         }
-        /* This class is added via JavaScript when clicked */
         .photo-caption.show {
             opacity: 1;
             max-height: 150px; 
@@ -163,55 +168,71 @@
         h2 { font-size: 2.2rem; margin-bottom: 25px; color: var(--primary-dark); position: relative; }
         h2::after { content: ''; display: block; width: 40px; height: 2px; background: var(--accent); margin: 15px auto 0; }
 
+        /* Specific Cursive Font for Wishes Section */
+        .cursive-wishes {
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            color: var(--text);
+            line-height: 1.4;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
         .form-group { margin-bottom: 25px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
         label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text); font-size: 0.95rem; }
         input, select, textarea { width: 100%; padding: 14px; border: 1px solid #e0e0e0; border-radius: 6px; font-family: sans-serif; background: rgba(255,255,255,0.8); transition: border-color 0.3s; }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--btn-color); }
         
+        /* Updated Colorful Buttons */
         button, .link-btn {
-            background-color: var(--primary); color: white; padding: 15px 40px; border: none; border-radius: 30px; font-size: 0.9rem; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; box-shadow: 0 4px 10px rgba(185, 201, 195, 0.3); font-family: sans-serif; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;
+            background-color: var(--btn-color); 
+            color: white; 
+            padding: 15px 40px; 
+            border: none; 
+            border-radius: 30px; 
+            font-size: 0.9rem; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+            text-decoration: none; 
+            display: inline-block; 
+            box-shadow: 0 4px 10px rgba(232, 139, 156, 0.3); 
+            font-family: sans-serif; 
+            font-weight: bold; 
+            letter-spacing: 1px; 
+            text-transform: uppercase;
         }
-        button:hover, .link-btn:hover { background-color: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(185, 201, 195, 0.4); }
+        button:hover, .link-btn:hover { 
+            background-color: var(--btn-hover); 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 15px rgba(232, 139, 156, 0.4); 
+        }
         button { width: 100%; max-width: 500px; }
 
-        .secondary-btn { background-color: transparent; color: var(--primary-dark); border: 2px solid var(--primary); margin-bottom: 30px; padding: 12px 25px; width: auto; box-shadow: none; }
-        .secondary-btn:hover { background-color: var(--primary); color: white; transform: none; box-shadow: none; }
-        .guest-separator { border: 0; border-top: 1px dashed #ccc; margin: 30px auto; max-width: 500px; display: none; }
+        .secondary-btn { 
+            background-color: transparent; 
+            color: var(--btn-color); 
+            border: 2px solid var(--btn-color); 
+            margin-bottom: 30px; 
+            padding: 12px 25px; 
+            width: auto; 
+            box-shadow: none; 
+        }
+        .secondary-btn:hover { 
+            background-color: var(--btn-color); 
+            color: white; 
+            transform: none; 
+            box-shadow: none; 
+        }
         
-        .donate-btn { background-color: transparent; color: var(--text); border: 2px solid var(--accent); box-shadow: none; }
-        .donate-btn:hover { background-color: var(--accent); color: white; transform: none; box-shadow: none; }
+        .guest-separator { border: 0; border-top: 1px dashed #ccc; margin: 30px auto; max-width: 500px; display: none; }
     </style>
 </head>
 <body>
 
-    <!-- Embedded SVG Flowers for Background -->
-    <svg class="bg-flower flower-top-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <g fill="var(--flower-pink)" opacity="0.8">
-            <path d="M100,50 C120,20 160,20 150,60 C180,70 180,110 140,110 C150,150 110,160 90,130 C60,150 20,130 40,90 C10,70 20,30 60,50 Z" />
-        </g>
-        <circle cx="98" cy="92" r="12" fill="var(--accent)" opacity="0.9"/>
-        <g fill="#9cb097" opacity="0.6">
-            <path d="M140,110 C170,140 180,180 140,170 C120,180 110,140 140,110 Z" />
-            <path d="M40,90 C10,110 0,150 30,150 C30,170 60,120 40,90 Z" />
-        </g>
-    </svg>
-
-    <svg class="bg-flower flower-bottom-right" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <g fill="var(--flower-pink)" opacity="0.8">
-            <path d="M100,50 C120,20 160,20 150,60 C180,70 180,110 140,110 C150,150 110,160 90,130 C60,150 20,130 40,90 C10,70 20,30 60,50 Z" />
-        </g>
-        <circle cx="98" cy="92" r="12" fill="var(--accent)" opacity="0.9"/>
-        <g fill="#9cb097" opacity="0.6">
-            <path d="M140,110 C170,140 180,180 140,170 C120,180 110,140 140,110 Z" />
-            <path d="M40,90 C10,110 0,150 30,150 C30,170 60,120 40,90 Z" />
-        </g>
-    </svg>
-
-    <!-- Top Navigation Menu -->
+    <!-- Top Navigation Menu (Побажання removed) -->
     <nav>
         <a href="#details">Локація</a>
         <a href="#media">Медіа</a>
-        <a href="#wishes">Побажання</a>
         <a href="#rsvp">RSVP</a>
     </nav>
 
@@ -256,10 +277,10 @@
 
     <section id="wishes" class="fade-up">
         <h2>Побажання</h2>
-        <p>Просимо вас не дарувати нам квіти, адже ми не встигнемо насолодитися їхньою красою перед поїздкою. Але донату на притулок для тваринок будемо дуже раді ❤️</p>
+        <!-- Applied new cursive style class here -->
+        <p class="cursive-wishes">Просимо вас не дарувати нам квіти, адже ми не встигнемо насолодитися їхньою красою перед поїздкою. Але донату на притулок для тваринок будемо дуже раді ❤️</p>
         <br><br>
-        <!-- REPLACE THE LINK BELOW WITH YOUR DONATE LINK LATER -->
-        <a href="#" target="_blank" class="link-btn donate-btn">Донат на притулок</a>
+        <a href="#" target="_blank" class="link-btn">Донат на притулок</a>
     </section>
 
     <section id="rsvp" class="fade-up">
@@ -294,7 +315,7 @@
     </section>
 
     <script>
-        // --- 1. PHOTO CLICK ANIMATION ---
+        // --- PHOTO CLICK ANIMATION ---
         const photoContainer = document.getElementById('photoContainer');
         const photoCaption = document.getElementById('photoCaption');
         
@@ -302,8 +323,7 @@
             photoCaption.classList.toggle('show');
         });
 
-        // --- 2. SCROLL ANIMATION OBSERVER ---
-        // This makes sections slide up smoothly as you scroll down
+        // --- SCROLL ANIMATION OBSERVER ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -314,12 +334,11 @@
 
         document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
         
-        // Trigger header animations immediately on load
         setTimeout(() => {
             document.querySelectorAll('header .fade-up').forEach(el => el.classList.add('visible'));
         }, 100);
 
-        // --- 3. COUNTDOWN TIMER ---
+        // --- COUNTDOWN TIMER ---
         const weddingDate = new Date('July 19, 2026 13:30:00').getTime();
 
         const timer = setInterval(function() {
@@ -340,7 +359,7 @@
             }
         }, 1000);
 
-        // --- 4. DYNAMIC GUEST LOGIC ---
+        // --- DYNAMIC GUEST LOGIC ---
         document.getElementById('addGuestBtn').addEventListener('click', function() {
             const guestList = document.getElementById('guestList');
             const firstGuest = guestList.querySelector('.guest-entry').cloneNode(true);
@@ -353,7 +372,7 @@
             guestList.appendChild(firstGuest);
         });
 
-        // --- 5. GOOGLE SHEETS RSVP SUBMISSION ---
+        // --- GOOGLE SHEETS RSVP SUBMISSION ---
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyUaln6PDIdGbmI8kdHOw8T3V4iZMFi6sOo4BMC29KSMIYsMh8s6-S-9ptAskjCf3uK/exec';
 
         const form = document.getElementById('rsvpForm');
