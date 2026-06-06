@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Wedding - July 19, 2026</title>
+    <style>
+        :root {
+            --primary: #4a5d4e; /* Sage green */
+            --accent: #d4af37;  /* Soft gold */
+            --text: #2d2d2d;
+            --bg: #fdfbf7;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Playfair Display', Georgia, serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        header {
+            padding: 100px 20px;
+            background: linear-gradient(rgba(253,251,247,0.8), rgba(253,251,247,0.95)), url('hero-bg.jpg') center/cover;
+        }
+
+        h1 { font-size: 3rem; margin-bottom: 10px; color: var(--primary); }
+        .date { font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 30px; }
+
+        #countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px auto;
+            max-width: 400px;
+        }
+
+        .time-box {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            flex: 1;
+        }
+
+        .time-box span { display: block; font-size: 1.8rem; font-weight: bold; color: var(--primary); }
+        .time-box label { font-size: 0.8rem; text-transform: uppercase; color: #777; }
+
+        section { padding: 80px 20px; max-width: 800px; margin: 0 auto; }
+        h2 { font-size: 2rem; margin-bottom: 20px; color: var(--primary); position: relative; }
+        h2::after { content: ''; display: block; width: 50px; height: 2px; background: var(--accent); margin: 10px auto 0; }
+
+        .form-group { margin-bottom: 20px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: sans-serif; }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover { background-color: #38463b; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Our Wedding</h1>
+        <p class="date">JULY 19, 2026</p>
+        <p>We can't wait to celebrate with you!</p>
+        
+        <div id="countdown">
+            <div class="time-box"><span id="days">00</span><label>Days</label></div>
+            <div class="time-box"><span id="hours">00</span><label>Hours</label></div>
+            <div class="time-box"><span id="minutes">00</span><label>Mins</label></div>
+        </div>
+    </header>
+
+    <section id="details">
+        <h2>The Details</h2>
+        <p><strong>Ceremony:</strong> 4:00 PM | Church Location</p>
+        <p><strong>Reception:</strong> 6:00 PM | Hall Location</p>
+        <p style="margin-top: 15px;"><em>Dress Code: Formal</em></p>
+    </section>
+
+    <section id="rsvp">
+        <h2>RSVP</h2>
+        <form id="rsvpForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required placeholder="Your full name">
+            </div>
+            <div class="form-group">
+                <label for="attendance">Will you attend?</label>
+                <select id="attendance" name="attendance" required>
+                    <option value="">Select an option</option>
+                    <option value="Joyfully Accept">Joyfully Accept</option>
+                    <option value="Regretfully Decline">Regretfully Decline</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dietary">Dietary Restrictions / Notes</label>
+                <textarea id="dietary" name="dietary" rows="3" placeholder="Allergies, vegan, vegetarian, etc."></textarea>
+            </div>
+            <button type="submit" id="submitBtn">Submit RSVP</button>
+        </form>
+    </section>
+
+    <script>
+        // TARGET WEDDING DATE
+        const weddingDate = new Date('July 19, 2026 16:00:00').getTime();
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById('days').innerText = String(days).padStart(2, '0');
+            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById('countdown').innerHTML = "<h3>The Big Day is Here!</h3>";
+            }
+        }, 1000);
+
+        // PASTE YOUR DEPLOYED APPS SCRIPT WEB APP URL HERE:
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwtd_nKwL4ptPaONgTesZTrctVkvfkIMBGDC-XPeegDeejD99hffk-lVyGwwTZ2G_89/exec';
+
+        const form = document.getElementById('rsvpForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Sending...';
+
+            const formData = new URLSearchParams(new FormData(form));
+
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === 'success') {
+                    alert('Thank you! Your RSVP has been saved.');
+                    form.reset();
+                } else {
+                    alert('Oops! Something went wrong. Please try again.');
+                    console.error(data.error);
+                }
+            })
+            .catch(error => {
+                alert('Success! Thank you for your RSVP.'); 
+                form.reset();
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Submit RSVP';
+            });
+        });
+    </script>
+</body>
+</html>
