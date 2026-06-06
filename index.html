@@ -14,12 +14,48 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Playfair Display', Georgia, serif;
             background-color: var(--bg);
             color: var(--text);
             line-height: 1.6;
             text-align: center;
+        }
+
+        /* Top Navigation Bar */
+        nav {
+            background-color: var(--bg);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: bold;
+            border: 2px solid var(--primary);
+            padding: 8px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            font-family: sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        nav a:hover {
+            background-color: var(--primary);
+            color: white;
         }
 
         header {
@@ -55,9 +91,9 @@
 
         .form-group { margin-bottom: 20px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
         label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: sans-serif; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: sans-serif; }
 
-        button {
+        button, .link-btn {
             background-color: var(--primary);
             color: white;
             padding: 15px 40px;
@@ -66,10 +102,12 @@
             font-size: 1rem;
             cursor: pointer;
             transition: background 0.3s;
-            width: 100%;
-            max-width: 500px;
+            text-decoration: none;
+            display: inline-block;
         }
-        button:hover { background-color: #38463b; }
+        button:hover, .link-btn:hover { background-color: #38463b; }
+        
+        button { width: 100%; max-width: 500px; }
 
         .secondary-btn {
             background-color: transparent;
@@ -77,6 +115,7 @@
             border: 2px solid var(--primary);
             margin-bottom: 25px;
             padding: 10px 20px;
+            width: auto;
         }
         .secondary-btn:hover {
             background-color: var(--primary);
@@ -94,6 +133,13 @@
 </head>
 <body>
 
+    <!-- Top Navigation Menu -->
+    <nav>
+        <a href="#details">Локація</a>
+        <a href="#media">Медіа</a>
+        <a href="#rsvp">RSVP</a>
+    </nav>
+
     <header>
         <h1>Наше Весілля</h1>
         <p class="date">19 ЛИПНЯ 2026 РОКУ</p>
@@ -106,13 +152,25 @@
         </div>
     </header>
 
+    <!-- Location Section -->
     <section id="details">
-        <h2>Деталі</h2>
-        <p><strong>Церемонія:</strong> 15:00 | Ресторан Замок Видубичі</p>
-        <p><strong>Вечеря:</strong> 16:00 | Ресторан Замок Видубичі</p>
-        <p style="margin-top: 15px;"><em>Дрес-код: Офіційний</em></p>
+        <h2>Деталі та Локація</h2>
+        <p><strong>Церемонія:</strong> 16:00 | Місце вінчання</p>
+        <p><strong>Вечеря:</strong> 18:00 | Ресторан "Замок Видубичі"</p>
+        <br>
+        <a href="https://www.google.com/maps/place/Castle+Vidubichi/@50.4168956,30.570776,15.96z/data=!4m6!3m5!1s0x40d4cf7d0ebc02af:0xdebd0df32742a2b1!8m2!3d50.4181102!4d30.5752806!16s%2Fg%2F1vg4h9tj?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="link-btn">Відкрити на Google Картах</a>
     </section>
 
+    <!-- Media Section -->
+    <section id="media">
+        <h2>Медіа</h2>
+        <p>Найкращі моменти — це ті, які ми розділяємо разом. Ми будемо дуже вдячні, якщо ви поділитеся всіма фотографіями та відео, які зробите в наш особливий день!</p>
+        <br>
+        <!-- REPLACE THE LINK BELOW WITH YOUR GOOGLE DRIVE FOLDER LINK -->
+        <a href="https://drive.google.com/drive/folders/1TdL_vouEdWwG9FGBhr-_-jK7kuXycmUR?usp=sharing" target="_blank" class="link-btn">Завантажити фото та відео</a>
+    </section>
+
+    <!-- RSVP Section -->
     <section id="rsvp">
         <h2>Підтвердження участі</h2>
         <form id="rsvpForm">
@@ -130,6 +188,11 @@
                             <option value="Із радістю прийду">Із радістю прийду</option>
                             <option value="На жаль, не зможу">На жаль, не зможу</option>
                         </select>
+                    </div>
+                    <!-- New Alcohol Preference Field -->
+                    <div class="form-group">
+                        <label>Алкоголь, якому ви надаєте перевагу</label>
+                        <textarea class="guest-alcohol" rows="2" placeholder="Наприклад: біле сухе вино, віскі, або безалкогольні напої"></textarea>
                     </div>
                 </div>
             </div>
@@ -170,6 +233,7 @@
             // Clear the inputs for the new guest
             firstGuest.querySelector('.guest-name').value = '';
             firstGuest.querySelector('.guest-attendance').value = '';
+            firstGuest.querySelector('.guest-alcohol').value = '';
             
             // Show the dashed separator line for subsequent guests
             firstGuest.querySelector('.guest-separator').style.display = 'block'; 
@@ -178,7 +242,7 @@
         });
 
         // PASTE YOUR DEPLOYED APPS SCRIPT WEB APP URL HERE:
-        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbx-e6IF_YkTjjCBJVhAnXKaTB5YHTOhqUu7TY71RV7dG92_7z5ExwMUa06-wsjrdzjj/exec';
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxcMKccg6Qjx4M1s-V6L7qd2wyfvSTYCl2fbYei6BQqNpxNeReaU7asc1kBbtOZ0GN0/exec';
 
         const form = document.getElementById('rsvpForm');
         const submitBtn = document.getElementById('submitBtn');
@@ -189,15 +253,18 @@
             submitBtn.disabled = true;
             submitBtn.innerText = 'Відправлення...';
 
-            // Collect all guest names and attendances into comma-separated strings
+            // Collect data for all guests
             const names = Array.from(document.querySelectorAll('.guest-name'))
-                               .map(input => input.value).join(', ');
+                               .map(input => input.value).join(' | ');
             const attendances = Array.from(document.querySelectorAll('.guest-attendance'))
-                                   .map(select => select.value).join(', ');
+                                   .map(select => select.value).join(' | ');
+            const alcohols = Array.from(document.querySelectorAll('.guest-alcohol'))
+                                .map(textarea => textarea.value || 'Не вказано').join(' | ');
 
             const formData = new URLSearchParams();
             formData.append('name', names);
             formData.append('attendance', attendances);
+            formData.append('alcohol', alcohols);
 
             fetch(WEB_APP_URL, {
                 method: 'POST',
@@ -210,7 +277,6 @@
             .then(data => {
                 if (data.result === 'success') {
                     alert('Дякуємо! Вашу відповідь збережено.');
-                    // Reset the form and remove extra added guests
                     form.reset();
                     const entries = document.querySelectorAll('.guest-entry');
                     for (let i = 1; i < entries.length; i++) {
