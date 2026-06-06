@@ -5,20 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Наше Весілля - 19 Липня 2026</title>
     <style>
-        /* NEW PASTEL AIRY PALETTE */
+        /* PASTEL AIRY PALETTE */
         :root {
-            --primary: #b9c9c3; /* Soft, light sage green */
-            --primary-dark: #555555; /* Softer text color for buttons */
-            --accent: #e6d6b8;  /* Light champagne gold */
-            --text: #3d3d3d;    /* Soft charcoal text */
-            --bg: #fefdfa;      /* Lighter cream background */
+            --primary: #b9c9c3; 
+            --primary-dark: #7a8f87; 
+            --accent: #e6d6b8;  
+            --text: #4a4a4a;    
+            --bg: #fefdfa;      
+            --flower-pink: #e8b4b8;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
 
         body {
             font-family: 'Playfair Display', Georgia, serif;
@@ -26,11 +24,45 @@
             color: var(--text);
             line-height: 1.6;
             text-align: center;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        /* Top Navigation Bar */
+        /* --- BACKGROUND FLORAL ANIMATIONS --- */
+        .bg-flower {
+            position: fixed;
+            z-index: -1;
+            opacity: 0; /* Starts hidden for animation */
+            animation: bloom 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation-delay: 0.5s;
+        }
+        
+        .flower-top-left { top: -20px; left: -20px; width: 250px; }
+        .flower-bottom-right { bottom: -20px; right: -20px; width: 300px; transform: rotate(180deg); animation-name: bloom-rotate; }
+
+        @keyframes bloom {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+        @keyframes bloom-rotate {
+            0% { transform: scale(0.5) rotate(160deg); opacity: 0; }
+            100% { transform: scale(1) rotate(180deg); opacity: 0.5; }
+        }
+
+        /* --- SCROLL ANIMATIONS FOR TEXT --- */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Navigation */
         nav {
-            background-color: var(--bg);
+            background-color: rgba(254, 253, 250, 0.95);
             padding: 15px;
             display: flex;
             justify-content: center;
@@ -39,9 +71,9 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            backdrop-filter: blur(5px);
         }
-
         nav a {
             text-decoration: none;
             color: var(--primary-dark);
@@ -51,49 +83,62 @@
             border-radius: 4px;
             transition: all 0.3s;
             font-family: sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
+        nav a:hover { background-color: var(--primary); color: white; }
 
-        nav a:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-
+        /* Header & Interactive Photo */
         header {
-            padding: 120px 20px;
-            background: linear-gradient(rgba(254,253,250,0.8), rgba(254,253,250,0.95)), url('hero-bg.jpg') center/cover;
+            padding: 80px 20px 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px; /* Airy gap */
+            gap: 15px;
         }
 
-        header img {
-            width: 100%;
-            max-width: 400px;
-            height: auto;
-            border-radius: 4px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            /* Optional: subtle pastel overlay effect */
-            filter: sepia(20%) saturate(80%);
+        .photo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer; /* Indicates it's clickable */
+            margin-bottom: 20px;
         }
+
+        .photo-container img {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            border-radius: 10px;
+            /* Added a soft glow for the cutout image */
+            filter: drop-shadow(0px 10px 20px rgba(185, 201, 195, 0.4));
+            transition: transform 0.3s ease;
+        }
+        .photo-container img:hover { transform: scale(1.02); }
 
         .photo-caption {
-            font-size: 0.9rem;
-            max-width: 500px;
+            font-size: 0.95rem;
+            max-width: 400px;
             font-style: italic;
-            color: var(--text);
-            opacity: 0.9;
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin: 20px 0; /* Add margin around heading */
             color: var(--primary-dark);
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 0;
+            padding: 0 15px;
+        }
+        /* This class is added via JavaScript when clicked */
+        .photo-caption.show {
+            opacity: 1;
+            max-height: 150px; 
+            margin-top: 15px;
         }
 
-        /* Complex Date Styling from wedding date.png */
+        h1 { font-size: 2.8rem; color: var(--primary-dark); margin: 10px 0; }
+
+        /* Date Styling */
         .complex-date {
             display: flex;
             justify-content: center;
@@ -102,145 +147,65 @@
             margin: 10px 0 30px;
             font-family: serif;
         }
+        .date-side-part { position: relative; display: flex; align-items: center; flex-grow: 0; width: 100px; justify-content: center; }
+        .date-side-part .date-label { font-size: 0.8rem; letter-spacing: 2px; color: var(--text); text-transform: uppercase; position: relative; z-index: 1; padding: 0 10px; background: var(--bg); }
+        .date-side-part::before { content: ''; position: absolute; left: 0; top: 50%; height: 1px; width: 100%; background-color: var(--accent); transform: translateY(-50%); z-index: 0; }
+        .date-main-part { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
+        .date-main-part .date-day { font-size: 3.5rem; font-weight: bold; color: var(--primary-dark); }
+        .date-main-part .date-year { font-size: 1rem; font-style: italic; color: var(--text); opacity: 0.8; margin-top: -5px; }
 
-        .date-side-part {
-            position: relative;
-            display: flex;
-            align-items: center;
-            flex-grow: 0;
-            width: 120px;
-        }
-
-        .date-side-part .date-label {
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            color: var(--text);
-            text-transform: uppercase;
-            position: relative;
-            z-index: 1;
-            padding: 0 10px;
-            background: var(--bg);
-        }
-
-        .date-side-part::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            height: 1px;
-            width: 100%;
-            background-color: var(--accent);
-            transform: translateY(-50%);
-        }
-
-        .date-main-part {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            line-height: 1.1;
-        }
-
-        .date-main-part .date-day {
-            font-size: 3.5rem;
-            font-weight: bold;
-            color: var(--text);
-        }
-
-        .date-main-part .date-year {
-            font-size: 1rem;
-            font-style: italic;
-            color: var(--text);
-            opacity: 0.8;
-            margin-top: -5px;
-        }
-
-        #countdown {
-            display: flex;
-            justify-content: center;
-            gap: 25px; /* Airy gap */
-            margin: 40px auto;
-            max-width: 450px;
-        }
-
-        .time-box {
-            background: white;
-            padding: 15px;
-            border-radius: 4px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            flex: 1;
-        }
-
+        #countdown { display: flex; justify-content: center; gap: 15px; margin: 30px auto; max-width: 450px; }
+        .time-box { background: rgba(255,255,255,0.7); padding: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); flex: 1; border: 1px solid rgba(230, 214, 184, 0.3); }
         .time-box span { display: block; font-size: 1.8rem; font-weight: bold; color: var(--primary-dark); }
-        .time-box label { font-size: 0.8rem; text-transform: uppercase; color: #777; }
+        .time-box label { font-size: 0.75rem; text-transform: uppercase; color: #888; letter-spacing: 1px; }
 
-        section { padding: 100px 20px; max-width: 800px; margin: 0 auto; }
-        h2 { font-size: 2rem; margin-bottom: 25px; color: var(--primary-dark); position: relative; }
-        h2::after { content: ''; display: block; width: 50px; height: 2px; background: var(--accent); margin: 10px auto 0; }
+        section { padding: 80px 20px; max-width: 800px; margin: 0 auto; }
+        h2 { font-size: 2.2rem; margin-bottom: 25px; color: var(--primary-dark); position: relative; }
+        h2::after { content: ''; display: block; width: 40px; height: 2px; background: var(--accent); margin: 15px auto 0; }
 
         .form-group { margin-bottom: 25px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; color: var(--text); }
-        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: sans-serif; background: transparent; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text); font-size: 0.95rem; }
+        input, select, textarea { width: 100%; padding: 14px; border: 1px solid #e0e0e0; border-radius: 6px; font-family: sans-serif; background: rgba(255,255,255,0.8); transition: border-color 0.3s; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
         
         button, .link-btn {
-            background-color: var(--primary);
-            color: white;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            background-color: var(--primary); color: white; padding: 15px 40px; border: none; border-radius: 30px; font-size: 0.9rem; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block; box-shadow: 0 4px 10px rgba(185, 201, 195, 0.3); font-family: sans-serif; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;
         }
-        button:hover, .link-btn:hover { background-color: #a2bdb3; } /* slightly darker lighter green */
+        button:hover, .link-btn:hover { background-color: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(185, 201, 195, 0.4); }
+        button { width: 100%; max-width: 500px; }
+
+        .secondary-btn { background-color: transparent; color: var(--primary-dark); border: 2px solid var(--primary); margin-bottom: 30px; padding: 12px 25px; width: auto; box-shadow: none; }
+        .secondary-btn:hover { background-color: var(--primary); color: white; transform: none; box-shadow: none; }
+        .guest-separator { border: 0; border-top: 1px dashed #ccc; margin: 30px auto; max-width: 500px; display: none; }
         
-        button { width: 100%; max-width: 500px; color: white; /* ensures text in new palette is visible */ }
-
-        .secondary-btn {
-            background-color: transparent;
-            color: var(--primary-dark);
-            border: 2px solid var(--primary);
-            margin-bottom: 30px;
-            padding: 10px 20px;
-            width: auto;
-            text-transform: uppercase;
-        }
-        .secondary-btn:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .guest-separator {
-            border: 0;
-            border-top: 1px dashed #ccc;
-            margin: 30px auto;
-            max-width: 500px;
-            display: none;
-        }
-
-        /* Style for the final RSVP submission button and others */
-        button, .link-btn, .secondary-btn {
-            font-family: sans-serif;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        /* Wishlist/Donate Button style for visibility */
-        .donate-btn {
-            background-color: transparent;
-            color: var(--text);
-            border: 2px solid var(--accent);
-            text-transform: uppercase;
-        }
-        .donate-btn:hover {
-            background-color: var(--accent);
-            color: white;
-        }
+        .donate-btn { background-color: transparent; color: var(--text); border: 2px solid var(--accent); box-shadow: none; }
+        .donate-btn:hover { background-color: var(--accent); color: white; transform: none; box-shadow: none; }
     </style>
 </head>
 <body>
+
+    <!-- Embedded SVG Flowers for Background -->
+    <svg class="bg-flower flower-top-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <g fill="var(--flower-pink)" opacity="0.8">
+            <path d="M100,50 C120,20 160,20 150,60 C180,70 180,110 140,110 C150,150 110,160 90,130 C60,150 20,130 40,90 C10,70 20,30 60,50 Z" />
+        </g>
+        <circle cx="98" cy="92" r="12" fill="var(--accent)" opacity="0.9"/>
+        <g fill="#9cb097" opacity="0.6">
+            <path d="M140,110 C170,140 180,180 140,170 C120,180 110,140 140,110 Z" />
+            <path d="M40,90 C10,110 0,150 30,150 C30,170 60,120 40,90 Z" />
+        </g>
+    </svg>
+
+    <svg class="bg-flower flower-bottom-right" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <g fill="var(--flower-pink)" opacity="0.8">
+            <path d="M100,50 C120,20 160,20 150,60 C180,70 180,110 140,110 C150,150 110,160 90,130 C60,150 20,130 40,90 C10,70 20,30 60,50 Z" />
+        </g>
+        <circle cx="98" cy="92" r="12" fill="var(--accent)" opacity="0.9"/>
+        <g fill="#9cb097" opacity="0.6">
+            <path d="M140,110 C170,140 180,180 140,170 C120,180 110,140 140,110 Z" />
+            <path d="M40,90 C10,110 0,150 30,150 C30,170 60,120 40,90 Z" />
+        </g>
+    </svg>
 
     <!-- Top Navigation Menu -->
     <nav>
@@ -250,72 +215,61 @@
         <a href="#rsvp">RSVP</a>
     </nav>
 
-    <header>
-        <!-- Photo and Caption first -->
-        <img src="IMG_0626.jpg" alt="Ваше спільне фото">
-        <p class="photo-caption">Це наше перше спільне фото, яке стало особливою частиною нашого весільного запрошення, хоча тоді ми про це навіть не здогадувалися🥰</p>
-        
-        <h1>Запрошуємо на наше Весілля</h1>
-        
-        <!-- Updated Date Styling ( mapped to 19 Sunday 2026 ) -->
-        <div class="complex-date">
-            <div class="date-side-part month-part">
-                <span class="date-label">ЛИПНЯ</span>
-            </div>
-            <div class="date-main-part">
-                <span class="date-day">19</span>
-                <span class="date-year">2026</span>
-            </div>
-            <div class="date-side-part weekday-part">
-                <span class="date-label">НЕДІЛЯ</span>
-            </div>
+    <header class="fade-up">
+        <!-- Interactive Photo Container -->
+        <div class="photo-container" id="photoContainer">
+            <img src="Subject.jpg" alt="Ваше спільне фото">
+            <p class="photo-caption" id="photoCaption">Це наше перше спільне фото, яке стало особливою частиною нашого весільного запрошення, хоча тоді ми про це навіть не здогадувалися🥰</p>
         </div>
         
-        <p>З нетерпінням чекаємо на святкування разом з вами!</p>
+        <h1 class="fade-up">Запрошуємо на наше Весілля</h1>
         
-        <div id="countdown">
+        <div class="complex-date fade-up">
+            <div class="date-side-part"><span class="date-label">ЛИПНЯ</span></div>
+            <div class="date-main-part"><span class="date-day">19</span><span class="date-year">2026</span></div>
+            <div class="date-side-part"><span class="date-label">НЕДІЛЯ</span></div>
+        </div>
+        
+        <p class="fade-up">З нетерпінням чекаємо на святкування разом з вами!</p>
+        
+        <div id="countdown" class="fade-up">
             <div class="time-box"><span id="days">00</span><label>Днів</label></div>
             <div class="time-box"><span id="hours">00</span><label>Годин</label></div>
             <div class="time-box"><span id="minutes">00</span><label>Хвилин</label></div>
         </div>
     </header>
 
-    <!-- Location Section -->
-    <section id="details">
+    <section id="details" class="fade-up">
         <h2>Деталі та Локація</h2>
-        <p><strong>Церемонія:</strong> 16:00 | Місце вінчання</p>
-        <p><strong>Вечеря:</strong> 18:00 | Ресторан "Замок Видубичі"</p>
-        <br>
+        <p><strong>Церемонія:</strong> 13:30 | Ресторан "Замок Видубичі"</p>
+        <p><strong>Вечеря:</strong> 15:00 | Ресторан "Замок Видубичі"</p>
+        <br><br>
         <a href="https://www.google.com/maps/place/Castle+Vidubichi/@50.4168956,30.570776,15.96z/data=!4m6!3m5!1s0x40d4cf7d0ebc02af:0xdebd0df32742a2b1!8m2!3d50.4181102!4d30.5752806!16s%2Fg%2F1vg4h9tj?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="link-btn">Відкрити на Google Картах</a>
     </section>
 
-    <!-- Media Section -->
-    <section id="media">
+    <section id="media" class="fade-up">
         <h2>Медіа</h2>
         <p>Найкращі моменти — це ті, які ми розділяємо разом. Ми будемо дуже вдячні, якщо ви поділитеся всіма фотографіями та відео, які зробите в наш особливий день!</p>
-        <br>
-        <!-- REPLACE THE LINK BELOW WITH YOUR GOOGLE DRIVE FOLDER LINK -->
+        <br><br>
         <a href="https://drive.google.com/drive/folders/1TdL_vouEdWwG9FGBhr-_-jK7kuXycmUR?usp=sharing" target="_blank" class="link-btn">Завантажити фото та відео</a>
     </section>
 
-    <!-- Wishlist Section -->
-    <section id="wishes">
+    <section id="wishes" class="fade-up">
         <h2>Побажання</h2>
         <p>Просимо вас не дарувати нам квіти, адже ми не встигнемо насолодитися їхньою красою перед поїздкою. Але донату на притулок для тваринок будемо дуже раді ❤️</p>
-        <br>
-        <!-- REPLACE THE LINK BELOW WITH YOUR DONATE LINK -->
-        <a href="ВСТАВТЕ_ПОСИЛАННЯ_НА_ДОНАТ_ТУТ" target="_blank" class="link-btn donate-btn">Донат на притулок</a>
+        <br><br>
+        <!-- REPLACE THE LINK BELOW WITH YOUR DONATE LINK LATER -->
+        <a href="#" target="_blank" class="link-btn donate-btn">Донат на притулок</a>
     </section>
 
-    <!-- RSVP Section -->
-    <section id="rsvp">
+    <section id="rsvp" class="fade-up">
         <h2>Підтвердження участі</h2>
         <form id="rsvpForm">
             <div id="guestList">
                 <div class="guest-entry">
                     <hr class="guest-separator">
                     <div class="form-group">
-                        <label>Ім'я та Прізвище</label>
+                        <label>Ім'я</label>
                         <input type="text" class="guest-name" required placeholder="Ваше ім'я">
                     </div>
                     <div class="form-group">
@@ -326,7 +280,6 @@
                             <option value="На жаль, не зможу">На жаль, не зможу</option>
                         </select>
                     </div>
-                    <!-- New Alcohol Preference Field (retains dynamic guest logic) -->
                     <div class="form-group">
                         <label>Алкоголь, якому ви надаєте перевагу</label>
                         <textarea class="guest-alcohol" rows="2" placeholder="Наприклад: біле сухе вино, віскі, або безалкогольні напої"></textarea>
@@ -341,8 +294,33 @@
     </section>
 
     <script>
-        // TARGET WEDDING DATE
-        const weddingDate = new Date('July 19, 2026 16:00:00').getTime();
+        // --- 1. PHOTO CLICK ANIMATION ---
+        const photoContainer = document.getElementById('photoContainer');
+        const photoCaption = document.getElementById('photoCaption');
+        
+        photoContainer.addEventListener('click', function() {
+            photoCaption.classList.toggle('show');
+        });
+
+        // --- 2. SCROLL ANIMATION OBSERVER ---
+        // This makes sections slide up smoothly as you scroll down
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+        
+        // Trigger header animations immediately on load
+        setTimeout(() => {
+            document.querySelectorAll('header .fade-up').forEach(el => el.classList.add('visible'));
+        }, 100);
+
+        // --- 3. COUNTDOWN TIMER ---
+        const weddingDate = new Date('July 19, 2026 13:30:00').getTime();
 
         const timer = setInterval(function() {
             const now = new Date().getTime();
@@ -362,23 +340,20 @@
             }
         }, 1000);
 
-        // Dynamic Guest Logic ( preserved )
+        // --- 4. DYNAMIC GUEST LOGIC ---
         document.getElementById('addGuestBtn').addEventListener('click', function() {
             const guestList = document.getElementById('guestList');
             const firstGuest = guestList.querySelector('.guest-entry').cloneNode(true);
             
-            // Clear the inputs for the new guest
             firstGuest.querySelector('.guest-name').value = '';
             firstGuest.querySelector('.guest-attendance').value = '';
             firstGuest.querySelector('.guest-alcohol').value = '';
-            
-            // Show the dashed separator line for subsequent guests
             firstGuest.querySelector('.guest-separator').style.display = 'block'; 
             
             guestList.appendChild(firstGuest);
         });
 
-        // PASTE YOUR DEPLOYED APPS SCRIPT WEB APP URL HERE:
+        // --- 5. GOOGLE SHEETS RSVP SUBMISSION ---
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyUaln6PDIdGbmI8kdHOw8T3V4iZMFi6sOo4BMC29KSMIYsMh8s6-S-9ptAskjCf3uK/exec';
 
         const form = document.getElementById('rsvpForm');
@@ -386,17 +361,12 @@
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            
             submitBtn.disabled = true;
             submitBtn.innerText = 'Відправлення...';
 
-            // Collect data for all guests and compile into CSV strings ( preserved )
-            const names = Array.from(document.querySelectorAll('.guest-name'))
-                               .map(input => input.value).join(' | ');
-            const attendances = Array.from(document.querySelectorAll('.guest-attendance'))
-                                   .map(select => select.value).join(' | ');
-            const alcohols = Array.from(document.querySelectorAll('.guest-alcohol'))
-                                .map(textarea => textarea.value || 'Не вказано').join(' | ');
+            const names = Array.from(document.querySelectorAll('.guest-name')).map(input => input.value).join(' | ');
+            const attendances = Array.from(document.querySelectorAll('.guest-attendance')).map(select => select.value).join(' | ');
+            const alcohols = Array.from(document.querySelectorAll('.guest-alcohol')).map(textarea => textarea.value || 'Не вказано').join(' | ');
 
             const formData = new URLSearchParams();
             formData.append('name', names);
@@ -406,9 +376,7 @@
             fetch(WEB_APP_URL, {
                 method: 'POST',
                 body: formData,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
             .then(response => response.json())
             .then(data => {
@@ -416,21 +384,16 @@
                     alert('Дякуємо! Вашу відповідь збережено.');
                     form.reset();
                     const entries = document.querySelectorAll('.guest-entry');
-                    for (let i = 1; i < entries.length; i++) {
-                        entries[i].remove();
-                    }
+                    for (let i = 1; i < entries.length; i++) { entries[i].remove(); }
                 } else {
                     alert('Ой! Щось пішло не так. Будь ласка, спробуйте ще раз.');
-                    console.error(data.error);
                 }
             })
             .catch(error => {
                 alert('Дякуємо! Вашу відповідь збережено.'); 
                 form.reset();
                 const entries = document.querySelectorAll('.guest-entry');
-                for (let i = 1; i < entries.length; i++) {
-                    entries[i].remove();
-                }
+                for (let i = 1; i < entries.length; i++) { entries[i].remove(); }
             })
             .finally(() => {
                 submitBtn.disabled = false;
