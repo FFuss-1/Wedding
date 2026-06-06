@@ -5,14 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Наше Весілля - 19 Липня 2026</title>
     <style>
+        /* NEW PASTEL AIRY PALETTE */
         :root {
-            --primary: #4a5d4e; /* Sage green */
-            --accent: #d4af37;  /* Soft gold */
-            --text: #2d2d2d;
-            --bg: #fdfbf7;
+            --primary: #b9c9c3; /* Soft, light sage green */
+            --primary-dark: #555555; /* Softer text color for buttons */
+            --accent: #e6d6b8;  /* Light champagne gold */
+            --text: #3d3d3d;    /* Soft charcoal text */
+            --bg: #fefdfa;      /* Lighter cream background */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
             font-family: 'Playfair Display', Georgia, serif;
@@ -22,20 +28,138 @@
             text-align: center;
         }
 
-        header {
-            padding: 100px 20px;
-            background: linear-gradient(rgba(253,251,247,0.8), rgba(253,251,247,0.95)), url('hero-bg.jpg') center/cover;
+        /* Top Navigation Bar */
+        nav {
+            background-color: var(--bg);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
         }
 
-        h1 { font-size: 3rem; margin-bottom: 10px; color: var(--primary); }
-        .date { font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 30px; }
+        nav a {
+            text-decoration: none;
+            color: var(--primary-dark);
+            font-weight: bold;
+            border: 2px solid var(--primary);
+            padding: 8px 20px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            font-family: sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        nav a:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        header {
+            padding: 120px 20px;
+            background: linear-gradient(rgba(254,253,250,0.8), rgba(254,253,250,0.95)), url('hero-bg.jpg') center/cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* Airy gap */
+        }
+
+        header img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            /* Optional: subtle pastel overlay effect */
+            filter: sepia(20%) saturate(80%);
+        }
+
+        .photo-caption {
+            font-size: 0.9rem;
+            max-width: 500px;
+            font-style: italic;
+            color: var(--text);
+            opacity: 0.9;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 20px 0; /* Add margin around heading */
+            color: var(--primary-dark);
+        }
+
+        /* Complex Date Styling from wedding date.png */
+        .complex-date {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 10px 0 30px;
+            font-family: serif;
+        }
+
+        .date-side-part {
+            position: relative;
+            display: flex;
+            align-items: center;
+            flex-grow: 0;
+            width: 120px;
+        }
+
+        .date-side-part .date-label {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: var(--text);
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+            padding: 0 10px;
+            background: var(--bg);
+        }
+
+        .date-side-part::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            height: 1px;
+            width: 100%;
+            background-color: var(--accent);
+            transform: translateY(-50%);
+        }
+
+        .date-main-part {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.1;
+        }
+
+        .date-main-part .date-day {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: var(--text);
+        }
+
+        .date-main-part .date-year {
+            font-size: 1rem;
+            font-style: italic;
+            color: var(--text);
+            opacity: 0.8;
+            margin-top: -5px;
+        }
 
         #countdown {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 25px; /* Airy gap */
             margin: 40px auto;
-            max-width: 400px;
+            max-width: 450px;
         }
 
         .time-box {
@@ -46,18 +170,18 @@
             flex: 1;
         }
 
-        .time-box span { display: block; font-size: 1.8rem; font-weight: bold; color: var(--primary); }
+        .time-box span { display: block; font-size: 1.8rem; font-weight: bold; color: var(--primary-dark); }
         .time-box label { font-size: 0.8rem; text-transform: uppercase; color: #777; }
 
-        section { padding: 80px 20px; max-width: 800px; margin: 0 auto; }
-        h2 { font-size: 2rem; margin-bottom: 20px; color: var(--primary); position: relative; }
+        section { padding: 100px 20px; max-width: 800px; margin: 0 auto; }
+        h2 { font-size: 2rem; margin-bottom: 25px; color: var(--primary-dark); position: relative; }
         h2::after { content: ''; display: block; width: 50px; height: 2px; background: var(--accent); margin: 10px auto 0; }
 
-        .form-group { margin-bottom: 20px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: sans-serif; }
-
-        button {
+        .form-group { margin-bottom: 25px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: var(--text); }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: sans-serif; background: transparent; }
+        
+        button, .link-btn {
             background-color: var(--primary);
             color: white;
             padding: 15px 40px;
@@ -66,17 +190,22 @@
             font-size: 1rem;
             cursor: pointer;
             transition: background 0.3s;
-            width: 100%;
-            max-width: 500px;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
         }
-        button:hover { background-color: #38463b; }
+        button:hover, .link-btn:hover { background-color: #a2bdb3; } /* slightly darker lighter green */
+        
+        button { width: 100%; max-width: 500px; color: white; /* ensures text in new palette is visible */ }
 
         .secondary-btn {
             background-color: transparent;
-            color: var(--primary);
+            color: var(--primary-dark);
             border: 2px solid var(--primary);
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             padding: 10px 20px;
+            width: auto;
+            text-transform: uppercase;
         }
         .secondary-btn:hover {
             background-color: var(--primary);
@@ -86,17 +215,62 @@
         .guest-separator {
             border: 0;
             border-top: 1px dashed #ccc;
-            margin: 25px auto;
+            margin: 30px auto;
             max-width: 500px;
             display: none;
+        }
+
+        /* Style for the final RSVP submission button and others */
+        button, .link-btn, .secondary-btn {
+            font-family: sans-serif;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Wishlist/Donate Button style for visibility */
+        .donate-btn {
+            background-color: transparent;
+            color: var(--text);
+            border: 2px solid var(--accent);
+            text-transform: uppercase;
+        }
+        .donate-btn:hover {
+            background-color: var(--accent);
+            color: white;
         }
     </style>
 </head>
 <body>
 
+    <!-- Top Navigation Menu -->
+    <nav>
+        <a href="#details">Локація</a>
+        <a href="#media">Медіа</a>
+        <a href="#wishes">Побажання</a>
+        <a href="#rsvp">RSVP</a>
+    </nav>
+
     <header>
-        <h1>Наше Весілля</h1>
-        <p class="date">19 ЛИПНЯ 2026 РОКУ</p>
+        <!-- Photo and Caption first -->
+        <img src="IMG_0626.jpg" alt="Ваше спільне фото">
+        <p class="photo-caption">Це наше перше спільне фото, яке стало особливою частиною нашого весільного запрошення, хоча тоді ми про це навіть не здогадувалися🥰</p>
+        
+        <h1>Запрошуємо на наше Весілля</h1>
+        
+        <!-- Updated Date Styling ( mapped to 19 Sunday 2026 ) -->
+        <div class="complex-date">
+            <div class="date-side-part month-part">
+                <span class="date-label">ЛИПНЯ</span>
+            </div>
+            <div class="date-main-part">
+                <span class="date-day">19</span>
+                <span class="date-year">2026</span>
+            </div>
+            <div class="date-side-part weekday-part">
+                <span class="date-label">НЕДІЛЯ</span>
+            </div>
+        </div>
+        
         <p>З нетерпінням чекаємо на святкування разом з вами!</p>
         
         <div id="countdown">
@@ -106,13 +280,34 @@
         </div>
     </header>
 
+    <!-- Location Section -->
     <section id="details">
-        <h2>Деталі</h2>
+        <h2>Деталі та Локація</h2>
         <p><strong>Церемонія:</strong> 16:00 | Місце вінчання</p>
-        <p><strong>Вечеря:</strong> 18:00 | Ресторан</p>
-        <p style="margin-top: 15px;"><em>Дрес-код: Офіційний</em></p>
+        <p><strong>Вечеря:</strong> 18:00 | Ресторан "Замок Видубичі"</p>
+        <br>
+        <a href="https://www.google.com/maps/place/Castle+Vidubichi/@50.4168956,30.570776,15.96z/data=!4m6!3m5!1s0x40d4cf7d0ebc02af:0xdebd0df32742a2b1!8m2!3d50.4181102!4d30.5752806!16s%2Fg%2F1vg4h9tj?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="link-btn">Відкрити на Google Картах</a>
     </section>
 
+    <!-- Media Section -->
+    <section id="media">
+        <h2>Медіа</h2>
+        <p>Найкращі моменти — це ті, які ми розділяємо разом. Ми будемо дуже вдячні, якщо ви поділитеся всіма фотографіями та відео, які зробите в наш особливий день!</p>
+        <br>
+        <!-- REPLACE THE LINK BELOW WITH YOUR GOOGLE DRIVE FOLDER LINK -->
+        <a href="https://drive.google.com/drive/folders/1TdL_vouEdWwG9FGBhr-_-jK7kuXycmUR?usp=sharing" target="_blank" class="link-btn">Завантажити фото та відео</a>
+    </section>
+
+    <!-- Wishlist Section -->
+    <section id="wishes">
+        <h2>Побажання</h2>
+        <p>Просимо вас не дарувати нам квіти, адже ми не встигнемо насолодитися їхньою красою перед поїздкою. Але донату на притулок для тваринок будемо дуже раді ❤️</p>
+        <br>
+        <!-- REPLACE THE LINK BELOW WITH YOUR DONATE LINK -->
+        <a href="ВСТАВТЕ_ПОСИЛАННЯ_НА_ДОНАТ_ТУТ" target="_blank" class="link-btn donate-btn">Донат на притулок</a>
+    </section>
+
+    <!-- RSVP Section -->
     <section id="rsvp">
         <h2>Підтвердження участі</h2>
         <form id="rsvpForm">
@@ -130,6 +325,11 @@
                             <option value="Із радістю прийду">Із радістю прийду</option>
                             <option value="На жаль, не зможу">На жаль, не зможу</option>
                         </select>
+                    </div>
+                    <!-- New Alcohol Preference Field (retains dynamic guest logic) -->
+                    <div class="form-group">
+                        <label>Алкоголь, якому ви надаєте перевагу</label>
+                        <textarea class="guest-alcohol" rows="2" placeholder="Наприклад: біле сухе вино, віскі, або безалкогольні напої"></textarea>
                     </div>
                 </div>
             </div>
@@ -162,7 +362,7 @@
             }
         }, 1000);
 
-        // Dynamic Guest Logic
+        // Dynamic Guest Logic ( preserved )
         document.getElementById('addGuestBtn').addEventListener('click', function() {
             const guestList = document.getElementById('guestList');
             const firstGuest = guestList.querySelector('.guest-entry').cloneNode(true);
@@ -170,6 +370,7 @@
             // Clear the inputs for the new guest
             firstGuest.querySelector('.guest-name').value = '';
             firstGuest.querySelector('.guest-attendance').value = '';
+            firstGuest.querySelector('.guest-alcohol').value = '';
             
             // Show the dashed separator line for subsequent guests
             firstGuest.querySelector('.guest-separator').style.display = 'block'; 
@@ -189,15 +390,18 @@
             submitBtn.disabled = true;
             submitBtn.innerText = 'Відправлення...';
 
-            // Collect all guest names and attendances into comma-separated strings
+            // Collect data for all guests and compile into CSV strings ( preserved )
             const names = Array.from(document.querySelectorAll('.guest-name'))
-                               .map(input => input.value).join(', ');
+                               .map(input => input.value).join(' | ');
             const attendances = Array.from(document.querySelectorAll('.guest-attendance'))
-                                   .map(select => select.value).join(', ');
+                                   .map(select => select.value).join(' | ');
+            const alcohols = Array.from(document.querySelectorAll('.guest-alcohol'))
+                                .map(textarea => textarea.value || 'Не вказано').join(' | ');
 
             const formData = new URLSearchParams();
             formData.append('name', names);
             formData.append('attendance', attendances);
+            formData.append('alcohol', alcohols);
 
             fetch(WEB_APP_URL, {
                 method: 'POST',
@@ -210,7 +414,6 @@
             .then(data => {
                 if (data.result === 'success') {
                     alert('Дякуємо! Вашу відповідь збережено.');
-                    // Reset the form and remove extra added guests
                     form.reset();
                     const entries = document.querySelectorAll('.guest-entry');
                     for (let i = 1; i < entries.length; i++) {
