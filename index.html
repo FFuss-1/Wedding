@@ -17,11 +17,11 @@
             --primary-dark: #7a8f87; 
             --accent: #e6d6b8;  
             --text: #4a4a4a;    
-            --bg: #fefdfa;      
+            --bg: #ffffff; /* 1. Pure White Screen Base */
             
-            /* New Vibrant Button Colors */
-            --btn-color: #e88b9c; /* Vibrant rose pink */
-            --btn-hover: #d66b7d; /* Deeper rose pink */
+            /* Vibrant Button Colors */
+            --btn-color: #e88b9c; 
+            --btn-hover: #d66b7d; 
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,25 +37,6 @@
             overflow-x: hidden;
         }
 
-        /* --- NEW DOODLE BACKGROUND ANIMATION --- */
-        /* Uses your SVG file as a smoothly drifting wallpaper at 10% opacity */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url('vecteezy_flowers-and-leaves-elements-designed-in-doodle-style-for_7496946.svg');
-            background-size: 400px;
-            opacity: 0.12;
-            z-index: -1;
-            pointer-events: none;
-            animation: float-bg 80s linear infinite;
-        }
-
-        @keyframes float-bg {
-            0% { background-position: 0 0; }
-            100% { background-position: 400px 400px; }
-        }
-
         /* --- SCROLL ANIMATIONS FOR TEXT --- */
         .fade-up {
             opacity: 0;
@@ -69,7 +50,7 @@
 
         /* Navigation */
         nav {
-            background-color: rgba(254, 253, 250, 0.95);
+            background-color: rgba(255, 255, 255, 0.95);
             padding: 15px;
             display: flex;
             justify-content: center;
@@ -98,11 +79,12 @@
 
         /* Header & Interactive Photo */
         header {
-            padding: 80px 20px 40px;
+            padding: 60px 20px 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
+            background-color: var(--bg); /* Ensures header is on white screen */
         }
 
         .photo-container {
@@ -117,15 +99,16 @@
             width: 100%;
             max-width: 350px;
             height: auto;
-            border-radius: 10px;
-            filter: drop-shadow(0px 10px 20px rgba(185, 201, 195, 0.4));
+            /* Soft edges via radial mask */
+            -webkit-mask-image: radial-gradient(ellipse closest-side, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
+            mask-image: radial-gradient(ellipse closest-side, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
             transition: transform 0.3s ease;
         }
         .photo-container img:hover { transform: scale(1.02); }
 
         .photo-caption {
             font-size: 0.95rem;
-            max-width: 400px;
+            max-width: 350px;
             font-style: italic;
             color: var(--primary-dark);
             opacity: 0;
@@ -159,38 +142,69 @@
         .date-main-part .date-day { font-size: 3.5rem; font-weight: bold; color: var(--primary-dark); }
         .date-main-part .date-year { font-size: 1rem; font-style: italic; color: var(--text); opacity: 0.8; margin-top: -5px; }
 
-        #countdown { display: flex; justify-content: center; gap: 15px; margin: 30px auto; max-width: 450px; }
+        #countdown { display: flex; justify-content: center; gap: 10px; margin: 20px auto; max-width: 450px; }
         .time-box { background: rgba(255,255,255,0.7); padding: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); flex: 1; border: 1px solid rgba(230, 214, 184, 0.3); }
         .time-box span { display: block; font-size: 1.8rem; font-weight: bold; color: var(--primary-dark); }
         .time-box label { font-size: 0.75rem; text-transform: uppercase; color: #888; letter-spacing: 1px; }
 
-        section { padding: 80px 20px; max-width: 800px; margin: 0 auto; }
-        h2 { font-size: 2.2rem; margin-bottom: 25px; color: var(--primary-dark); position: relative; }
-        h2::after { content: ''; display: block; width: 40px; height: 2px; background: var(--accent); margin: 15px auto 0; }
+        /* --- 2. VIDEO BACKGROUND SECTION --- */
+        .video-background-section {
+            position: relative;
+            width: 100%;
+            padding: 60px 15px;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        /* --- 3. WHITE BOX COMPONENT (50% Opacity) --- */
+        .content-box {
+            position: relative;
+            z-index: 2;
+            background-color: rgba(255, 255, 255, 0.5); /* 50% opacity */
+            border-radius: 30px; /* Round shapes */
+            width: 100%;
+            max-width: 350px; /* Width as photo */
+            padding: 40px 20px;
+            backdrop-filter: blur(5px); /* Softens the video behind the text slightly for legibility */
+        }
+
+        .content-box section { padding: 25px 0; max-width: 100%; margin: 0 auto; }
+        .content-box h2 { font-size: 1.8rem; margin-bottom: 20px; color: var(--text); position: relative; }
+        .content-box h2::after { content: ''; display: block; width: 40px; height: 2px; background: var(--btn-color); margin: 15px auto 0; }
 
         /* Specific Cursive Font for Wishes Section */
         .cursive-wishes {
             font-family: 'Caveat', cursive;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: var(--text);
-            line-height: 1.4;
-            max-width: 600px;
+            line-height: 1.3;
             margin: 0 auto;
         }
 
-        .form-group { margin-bottom: 25px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text); font-size: 0.95rem; }
-        input, select, textarea { width: 100%; padding: 14px; border: 1px solid #e0e0e0; border-radius: 6px; font-family: sans-serif; background: rgba(255,255,255,0.8); transition: border-color 0.3s; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text); font-size: 0.9rem; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.6); border-radius: 6px; font-family: sans-serif; background: rgba(255,255,255,0.85); transition: border-color 0.3s; }
         input:focus, select:focus, textarea:focus { outline: none; border-color: var(--btn-color); }
         
-        /* Updated Colorful Buttons */
+        /* Vibrant Buttons */
         button, .link-btn {
             background-color: var(--btn-color); 
             color: white; 
-            padding: 15px 40px; 
+            padding: 14px 20px; 
             border: none; 
             border-radius: 30px; 
-            font-size: 0.9rem; 
+            font-size: 0.85rem; 
             cursor: pointer; 
             transition: all 0.3s; 
             text-decoration: none; 
@@ -200,21 +214,20 @@
             font-weight: bold; 
             letter-spacing: 1px; 
             text-transform: uppercase;
+            width: 100%;
         }
         button:hover, .link-btn:hover { 
             background-color: var(--btn-hover); 
             transform: translateY(-2px); 
             box-shadow: 0 6px 15px rgba(232, 139, 156, 0.4); 
         }
-        button { width: 100%; max-width: 500px; }
 
         .secondary-btn { 
             background-color: transparent; 
             color: var(--btn-color); 
             border: 2px solid var(--btn-color); 
-            margin-bottom: 30px; 
-            padding: 12px 25px; 
-            width: auto; 
+            margin-bottom: 25px; 
+            padding: 10px 15px; 
             box-shadow: none; 
         }
         .secondary-btn:hover { 
@@ -224,12 +237,12 @@
             box-shadow: none; 
         }
         
-        .guest-separator { border: 0; border-top: 1px dashed #ccc; margin: 30px auto; max-width: 500px; display: none; }
+        .guest-separator { border: 0; border-top: 1px dashed rgba(0,0,0,0.2); margin: 25px auto; display: none; }
     </style>
 </head>
 <body>
 
-    <!-- Top Navigation Menu (Побажання removed) -->
+    <!-- Top Navigation Menu -->
     <nav>
         <a href="#details">Локація</a>
         <a href="#media">Медіа</a>
@@ -239,7 +252,7 @@
     <header class="fade-up">
         <!-- Interactive Photo Container -->
         <div class="photo-container" id="photoContainer">
-            <img src="IMG_0626.jpg" alt="Ваше спільне фото">
+            <img src="Subject.jpg" alt="Ваше спільне фото">
             <p class="photo-caption" id="photoCaption">Це наше перше спільне фото, яке стало особливою частиною нашого весільного запрошення, хоча тоді ми про це навіть не здогадувалися🥰</p>
         </div>
         
@@ -251,7 +264,7 @@
             <div class="date-side-part"><span class="date-label">НЕДІЛЯ</span></div>
         </div>
         
-        <p class="cursive-wishes">З нетерпінням чекаємо на святкування разом з вами!</p>
+        <p class="fade-up">З нетерпінням чекаємо на святкування разом з вами!</p>
         
         <div id="countdown" class="fade-up">
             <div class="time-box"><span id="days">00</span><label>Днів</label></div>
@@ -260,59 +273,70 @@
         </div>
     </header>
 
-    <section id="details" class="fade-up">
-        <h2>Деталі та Локація</h2>
-        <p><strong>Церемонія:</strong> 13:30 | Ресторан "Замок Видубичі"</p>
-        <p><strong>Вечеря:</strong> 15:00 | Ресторан "Замок Видубичі"</p>
-        <br><br>
-        <a href="https://www.google.com/maps/place/Castle+Vidubichi/@50.4168956,30.570776,15.96z/data=!4m6!3m5!1s0x40d4cf7d0ebc02af:0xdebd0df32742a2b1!8m2!3d50.4181102!4d30.5752806!16s%2Fg%2F1vg4h9tj?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="link-btn">Відкрити на Google Картах</a>
-    </section>
+    <!-- NEW VIDEO BACKGROUND SECTION -->
+    <div class="video-background-section">
+        
+        <!-- Video element loaded directly from the local file -->
+        <video autoplay loop muted playsinline class="bg-video">
+            <source src="video.mp4" type="video/mp4">
+        </video>
+        
+        <!-- The White Box container perfectly sized to your photo -->
+        <div class="content-box">
+            
+            <section id="details" class="fade-up">
+                <h2>Деталі та Локація</h2>
+                <p><strong>Церемонія:</strong> 13:30 | Ресторан "Замок Видубичі"</p>
+                <p><strong>Вечеря:</strong> 15:00 | Ресторан "Замок Видубичі"</p>
+                <br>
+                <a href="https://www.google.com/maps/place/Castle+Vidubichi/@50.4168956,30.570776,15.96z/data=!4m6!3m5!1s0x40d4cf7d0ebc02af:0xdebd0df32742a2b1!8m2!3d50.4181102!4d30.5752806!16s%2Fg%2F1vg4h9tj?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="link-btn">Відкрити на Картах</a>
+            </section>
 
-    <section id="media" class="fade-up">
-        <h2>Медіа</h2>
-        <p class="cursive-wishes">Найкращі моменти — це ті, які ми розділяємо разом. Ми будемо дуже вдячні, якщо ви поділитеся всіма фотографіями та відео, які зробите в наш особливий день!</p>
-        <br><br>
-        <a href="https://drive.google.com/drive/folders/1TdL_vouEdWwG9FGBhr-_-jK7kuXycmUR?usp=sharing" target="_blank" class="link-btn">Завантажити фото та відео</a>
-    </section>
+            <section id="media" class="fade-up">
+                <h2>Медіа</h2>
+                <p style="font-size: 0.9rem;">Найкращі моменти — це ті, які ми розділяємо разом. Ми будемо дуже вдячні, якщо ви поділитеся всіма фотографіями та відео, які зробите в наш особливий день!</p>
+                <br>
+                <a href="https://drive.google.com/drive/folders/1TdL_vouEdWwG9FGBhr-_-jK7kuXycmUR?usp=sharing" target="_blank" class="link-btn">Завантажити фото</a>
+            </section>
 
-    <section id="wishes" class="fade-up">
-        <h2>Побажання</h2>
-        <!-- Applied new cursive style class here -->
-        <p class="cursive-wishes">Просимо вас не дарувати нам квіти, адже ми не встигнемо насолодитися їхньою красою перед поїздкою. Але донату на притулок для тваринок будемо дуже раді ❤️</p>
-        <br><br>
-        <a href="#" target="_blank" class="link-btn">Донат на притулок</a>
-    </section>
+            <section id="wishes" class="fade-up">
+                <h2>Побажання</h2>
+                <p class="cursive-wishes">Просимо вас не дарувати нам квіти, адже ми не встигнемо насолодитися їхньою красою перед поїздкою. Але донату на притулок для тваринок будемо дуже раді ❤️</p>
+                <br>
+                <a href="#" target="_blank" class="link-btn">Донат на притулок</a>
+            </section>
 
-    <section id="rsvp" class="fade-up">
-        <h2>Підтвердження участі</h2>
-        <form id="rsvpForm">
-            <div id="guestList">
-                <div class="guest-entry">
-                    <hr class="guest-separator">
-                    <div class="form-group">
-                        <label>Ім'я</label>
-                        <input type="text" class="guest-name" required placeholder="Ваше ім'я">
+            <section id="rsvp" class="fade-up">
+                <h2>Підтвердження участі</h2>
+                <form id="rsvpForm">
+                    <div id="guestList">
+                        <div class="guest-entry">
+                            <hr class="guest-separator">
+                            <div class="form-group">
+                                <label>Ім'я</label>
+                                <input type="text" class="guest-name" required placeholder="Ваше ім'я">
+                            </div>
+                            <div class="form-group">
+                                <label>Чи зможете ви прийти?</label>
+                                <select class="guest-attendance" required>
+                                    <option value="">Оберіть варіант</option>
+                                    <option value="Із радістю прийду">Із радістю прийду</option>
+                                    <option value="На жаль, не зможу">На жаль, не зможу</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Алкоголь, якому ви надаєте перевагу</label>
+                                <textarea class="guest-alcohol" rows="2" placeholder="біле сухе вино, віскі, тощо"></textarea>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Чи зможете ви прийти?</label>
-                        <select class="guest-attendance" required>
-                            <option value="">Оберіть варіант</option>
-                            <option value="Із радістю прийду">Із радістю прийду</option>
-                            <option value="На жаль, не зможу">На жаль, не зможу</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Алкоголь, якому ви надаєте перевагу</label>
-                        <textarea class="guest-alcohol" rows="2" placeholder="Наприклад: біле сухе вино, віскі, або безалкогольні напої"></textarea>
-                    </div>
-                </div>
-            </div>
 
-            <button type="button" id="addGuestBtn" class="secondary-btn">+ Додати ще одного гостя</button>
-            <br>
-            <button type="submit" id="submitBtn">Відправити</button>
-        </form>
-    </section>
+                    <button type="button" id="addGuestBtn" class="secondary-btn">+ Додати гостя</button>
+                    <button type="submit" id="submitBtn">Відправити</button>
+                </form>
+            </section>
+        </div>
+    </div>
 
     <script>
         // --- PHOTO CLICK ANIMATION ---
@@ -330,7 +354,7 @@
                     entry.target.classList.add('visible');
                 }
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.1 });
 
         document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
         
