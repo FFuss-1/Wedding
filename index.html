@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Wedding - July 19, 2026</title>
+    <title>Наше Весілля - 19 Липня 2026</title>
     <style>
         :root {
             --primary: #4a5d4e; /* Sage green */
@@ -55,7 +55,7 @@
 
         .form-group { margin-bottom: 20px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
         label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: sans-serif; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: sans-serif; }
 
         button {
             background-color: var(--primary);
@@ -66,51 +66,77 @@
             font-size: 1rem;
             cursor: pointer;
             transition: background 0.3s;
+            width: 100%;
+            max-width: 500px;
         }
         button:hover { background-color: #38463b; }
+
+        .secondary-btn {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            margin-bottom: 25px;
+            padding: 10px 20px;
+        }
+        .secondary-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .guest-separator {
+            border: 0;
+            border-top: 1px dashed #ccc;
+            margin: 25px auto;
+            max-width: 500px;
+            display: none;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Our Wedding</h1>
-        <p class="date">JULY 19, 2026</p>
-        <p>We can't wait to celebrate with you!</p>
+        <h1>Наше Весілля</h1>
+        <p class="date">19 ЛИПНЯ 2026 РОКУ</p>
+        <p>З нетерпінням чекаємо на святкування разом з вами!</p>
         
         <div id="countdown">
-            <div class="time-box"><span id="days">00</span><label>Days</label></div>
-            <div class="time-box"><span id="hours">00</span><label>Hours</label></div>
-            <div class="time-box"><span id="minutes">00</span><label>Mins</label></div>
+            <div class="time-box"><span id="days">00</span><label>Днів</label></div>
+            <div class="time-box"><span id="hours">00</span><label>Годин</label></div>
+            <div class="time-box"><span id="minutes">00</span><label>Хвилин</label></div>
         </div>
     </header>
 
     <section id="details">
-        <h2>The Details</h2>
-        <p><strong>Ceremony:</strong> 4:00 PM | Church Location</p>
-        <p><strong>Reception:</strong> 6:00 PM | Hall Location</p>
-        <p style="margin-top: 15px;"><em>Dress Code: Formal</em></p>
+        <h2>Деталі</h2>
+        <p><strong>Церемонія:</strong> 16:00 | Місце вінчання</p>
+        <p><strong>Вечеря:</strong> 18:00 | Ресторан</p>
+        <p style="margin-top: 15px;"><em>Дрес-код: Офіційний</em></p>
     </section>
 
     <section id="rsvp">
-        <h2>RSVP</h2>
+        <h2>Підтвердження участі</h2>
         <form id="rsvpForm">
-            <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" required placeholder="Your full name">
+            <div id="guestList">
+                <div class="guest-entry">
+                    <hr class="guest-separator">
+                    <div class="form-group">
+                        <label>Ім'я та Прізвище</label>
+                        <input type="text" class="guest-name" required placeholder="Ваше ім'я">
+                    </div>
+                    <div class="form-group">
+                        <label>Чи зможете ви прийти?</label>
+                        <select class="guest-attendance" required>
+                            <option value="">Оберіть варіант</option>
+                            <option value="Із радістю прийду">Із радістю прийду</option>
+                            <option value="На жаль, не зможу">На жаль, не зможу</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="attendance">Will you attend?</label>
-                <select id="attendance" name="attendance" required>
-                    <option value="">Select an option</option>
-                    <option value="Joyfully Accept">Joyfully Accept</option>
-                    <option value="Regretfully Decline">Regretfully Decline</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="dietary">Dietary Restrictions / Notes</label>
-                <textarea id="dietary" name="dietary" rows="3" placeholder="Allergies, vegan, vegetarian, etc."></textarea>
-            </div>
-            <button type="submit" id="submitBtn">Submit RSVP</button>
+
+            <button type="button" id="addGuestBtn" class="secondary-btn">+ Додати ще одного гостя</button>
+            <br>
+            <button type="submit" id="submitBtn">Відправити</button>
         </form>
     </section>
 
@@ -132,12 +158,27 @@
 
             if (distance < 0) {
                 clearInterval(timer);
-                document.getElementById('countdown').innerHTML = "<h3>The Big Day is Here!</h3>";
+                document.getElementById('countdown').innerHTML = "<h3>Цей день настав!</h3>";
             }
         }, 1000);
 
+        // Dynamic Guest Logic
+        document.getElementById('addGuestBtn').addEventListener('click', function() {
+            const guestList = document.getElementById('guestList');
+            const firstGuest = guestList.querySelector('.guest-entry').cloneNode(true);
+            
+            // Clear the inputs for the new guest
+            firstGuest.querySelector('.guest-name').value = '';
+            firstGuest.querySelector('.guest-attendance').value = '';
+            
+            // Show the dashed separator line for subsequent guests
+            firstGuest.querySelector('.guest-separator').style.display = 'block'; 
+            
+            guestList.appendChild(firstGuest);
+        });
+
         // PASTE YOUR DEPLOYED APPS SCRIPT WEB APP URL HERE:
-        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwtd_nKwL4ptPaONgTesZTrctVkvfkIMBGDC-XPeegDeejD99hffk-lVyGwwTZ2G_89/exec';
+        const WEB_APP_URL = 'YOUR_COPIED_APPS_SCRIPT_WEB_APP_URL';
 
         const form = document.getElementById('rsvpForm');
         const submitBtn = document.getElementById('submitBtn');
@@ -146,9 +187,17 @@
             e.preventDefault();
             
             submitBtn.disabled = true;
-            submitBtn.innerText = 'Sending...';
+            submitBtn.innerText = 'Відправлення...';
 
-            const formData = new URLSearchParams(new FormData(form));
+            // Collect all guest names and attendances into comma-separated strings
+            const names = Array.from(document.querySelectorAll('.guest-name'))
+                               .map(input => input.value).join(', ');
+            const attendances = Array.from(document.querySelectorAll('.guest-attendance'))
+                                   .map(select => select.value).join(', ');
+
+            const formData = new URLSearchParams();
+            formData.append('name', names);
+            formData.append('attendance', attendances);
 
             fetch(WEB_APP_URL, {
                 method: 'POST',
@@ -160,20 +209,29 @@
             .then(response => response.json())
             .then(data => {
                 if (data.result === 'success') {
-                    alert('Thank you! Your RSVP has been saved.');
+                    alert('Дякуємо! Вашу відповідь збережено.');
+                    // Reset the form and remove extra added guests
                     form.reset();
+                    const entries = document.querySelectorAll('.guest-entry');
+                    for (let i = 1; i < entries.length; i++) {
+                        entries[i].remove();
+                    }
                 } else {
-                    alert('Oops! Something went wrong. Please try again.');
+                    alert('Ой! Щось пішло не так. Будь ласка, спробуйте ще раз.');
                     console.error(data.error);
                 }
             })
             .catch(error => {
-                alert('Success! Thank you for your RSVP.'); 
+                alert('Дякуємо! Вашу відповідь збережено.'); 
                 form.reset();
+                const entries = document.querySelectorAll('.guest-entry');
+                for (let i = 1; i < entries.length; i++) {
+                    entries[i].remove();
+                }
             })
             .finally(() => {
                 submitBtn.disabled = false;
-                submitBtn.innerText = 'Submit RSVP';
+                submitBtn.innerText = 'Відправити';
             });
         });
     </script>
