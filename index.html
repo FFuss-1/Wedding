@@ -37,7 +37,7 @@
             background-color: transparent; 
         }
 
-        /* --- 1. FIXED VIDEO BACKGROUND (For the bottom section parallax) --- */
+        /* --- 1. FIXED VIDEO BACKGROUND (Parallax bottom video) --- */
         .fixed-video-bg {
             position: fixed;
             top: 0;
@@ -110,10 +110,11 @@
             z-index: 2;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
             overflow: hidden; 
-            background-color: transparent; /* Removed solid white background */
+            /* White base so the uncropped video blends seamlessly on mobile */
+            background-color: #ffffff; 
         }
 
-        /* The watercolor leaves video layer */
+        /* The watercolor background video */
         .header-video-bg {
             position: absolute;
             top: 0;
@@ -124,7 +125,15 @@
             z-index: 0; 
         }
 
-        /* 70% White overlay layer so the text is legible over the video */
+        /* Prevents cropping of leaves on narrow mobile screens */
+        @media (max-width: 768px) {
+            .header-video-bg {
+                object-fit: contain; 
+                object-position: top;
+            }
+        }
+
+        /* The 70% white filter that ensures text is readable */
         .header-overlay {
             position: absolute;
             top: 0;
