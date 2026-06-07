@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Наше весілля - 19 Липня 2026</title>
     
+    <!-- Import elegant cursive font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
@@ -110,8 +111,7 @@
             z-index: 2;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
             overflow: hidden; 
-            /* White base so the uncropped video blends seamlessly on mobile */
-            background-color: #ffffff; 
+            background-color: transparent; 
         }
 
         /* The watercolor background video */
@@ -125,11 +125,18 @@
             z-index: 0; 
         }
 
-        /* Prevents cropping of leaves on narrow mobile screens */
+        /* 
+          YOUR FIX: Rotating the video specifically for mobile phones. 
+          This forces the leaves to perfectly frame the top and bottom of the tall screen!
+        */
         @media (max-width: 768px) {
             .header-video-bg {
-                object-fit: contain; 
-                object-position: top;
+                width: 150vh; /* Becomes visual height after rotation */
+                height: 100vw; /* Becomes visual width after rotation */
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(90deg);
+                object-fit: cover;
             }
         }
 
@@ -186,6 +193,7 @@
             display: inline-block;
         }
 
+        /* Oval softness removed entirely - borders are now clean and crisp */
         .photo-container img {
             width: 100%;
             max-width: 350px;
@@ -325,23 +333,28 @@
 </head>
 <body>
 
+    <!-- 1. THE FIXED VIDEO BACKGROUND (Parallax bottom video) -->
     <div class="fixed-video-bg">
         <video autoplay loop muted playsinline class="bg-video">
             <source src="video.mp4" type="video/mp4">
         </video>
     </div>
 
+    <!-- Top Navigation Menu -->
     <nav>
         <a href="#details">Локація</a>
         <a href="#media">Медіа</a>
         <a href="#rsvp">Участь</a>
     </nav>
 
+    <!-- 2. HEADER WITH LEAF VIDEO BACKGROUND AND 70% WHITE OVERLAY -->
     <header>
+        <!-- The watercolor background video -->
         <video autoplay loop muted playsinline class="header-video-bg">
             <source src="top-video.mp4" type="video/mp4">
         </video>
         
+        <!-- The 70% white filter that ensures text is readable -->
         <div class="header-overlay"></div>
 
         <h1 class="fade-up">Запрошуємо на наше весілля</h1>
@@ -361,6 +374,7 @@
                         <polyline points="14 18, 18 18, 18 14" />
                     </svg>
                 </div>
+                <!-- Clean, non-faded edges for the image -->
                 <img src="IMG_0626.jpg" alt="Ваше спільне фото">
             </div>
             <p class="photo-caption cursive-text" id="photoCaption">Це наше перше спільне фото, яке стало особливою частиною нашого весільного запрошення, хоча тоді ми про це навіть не здогадувалися🥰</p>
@@ -375,6 +389,7 @@
         </div>
     </header>
 
+    <!-- 3. SCROLLING CONTENT SECTION -->
     <main class="scrolling-content-wrapper">
         <div class="content-box">
             
