@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Наше Весілля - 19 Липня 2026</title>
+    <title>Наше весілля - 19 Липня 2026</title>
     
     <!-- Import elegant cursive font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +17,7 @@
             --primary-dark: #7a8f87; 
             --accent: #e6d6b8;  
             --text: #4a4a4a;    
-            --bg: #ffffff; /* Pure White Screen Base */
+            --bg: #ffffff; 
             
             /* Unified Sage Green Button Colors */
             --btn-color: #8fa69a; 
@@ -38,7 +38,7 @@
             background-color: transparent; 
         }
 
-        /* --- 1. FIXED VIDEO BACKGROUND --- */
+        /* --- 1. FIXED VIDEO BACKGROUND (For the bottom section parallax) --- */
         .fixed-video-bg {
             position: fixed;
             top: 0;
@@ -100,17 +100,39 @@
             box-shadow: 0 6px 15px var(--btn-shadow);
         }
 
-        /* --- 2. SOLID WHITE HEADER --- */
+        /* --- 2. HEADER WITH NEW VIDEO BACKGROUND --- */
         header {
             padding: 60px 20px 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
-            background-color: var(--bg); 
             position: relative;
             z-index: 2;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            overflow: hidden; /* Keeps the video perfectly inside the header */
+            background-color: var(--bg); /* Fallback color */
+        }
+
+        /* The new watercolor video */
+        .header-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0; /* Keeps it strictly in the background */
+        }
+
+        /* Puts the text and photo in the foreground above the new video */
+        header > h1, 
+        header > .complex-date, 
+        header > .photo-container, 
+        header > p, 
+        header > #countdown {
+            position: relative;
+            z-index: 2;
         }
 
         h1 { font-size: 2.8rem; color: var(--text); margin: 10px 0; }
@@ -125,7 +147,7 @@
             font-family: serif;
         }
         .date-side-part { position: relative; display: flex; align-items: center; flex-grow: 0; width: 100px; justify-content: center; }
-        .date-side-part .date-label { font-size: 0.8rem; letter-spacing: 2px; color: var(--text); text-transform: uppercase; position: relative; z-index: 1; padding: 0 10px; background: var(--bg); }
+        .date-side-part .date-label { font-size: 0.8rem; letter-spacing: 2px; color: var(--text); text-transform: uppercase; position: relative; z-index: 1; padding: 0 10px; background: var(--bg); border-radius: 4px; }
         .date-side-part::before { content: ''; position: absolute; left: 0; top: 50%; height: 1px; width: 100%; background-color: var(--accent); transform: translateY(-50%); z-index: 0; }
         .date-main-part { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
         .date-main-part .date-day { font-size: 3.5rem; font-weight: bold; color: var(--text); }
@@ -149,8 +171,8 @@
             width: 100%;
             max-width: 350px;
             height: auto;
-            -webkit-mask-image: radial-gradient(ellipse closest-side, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
-            mask-image: radial-gradient(ellipse closest-side, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+            border-radius: 10px; /* Crisp edges as requested */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Adds a nice depth against the video */
             transition: transform 0.3s ease;
         }
         .photo-container img:hover { transform: scale(1.02); }
@@ -195,7 +217,7 @@
         }
 
         #countdown { display: flex; justify-content: center; gap: 10px; margin: 20px auto; max-width: 450px; }
-        .time-box { background: rgba(255,255,255,0.7); padding: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); flex: 1; border: 1px solid rgba(230, 214, 184, 0.3); }
+        .time-box { background: rgba(255,255,255,0.8); padding: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); flex: 1; border: 1px solid rgba(230, 214, 184, 0.3); backdrop-filter: blur(5px); }
         .time-box span { display: block; font-size: 1.8rem; font-weight: bold; color: var(--primary-dark); }
         .time-box label { font-size: 0.75rem; text-transform: uppercase; color: #888; letter-spacing: 1px; }
 
@@ -284,7 +306,7 @@
 </head>
 <body>
 
-    <!-- 1. THE FIXED VIDEO BACKGROUND -->
+    <!-- 1. THE FIXED VIDEO BACKGROUND (Parallax video) -->
     <div class="fixed-video-bg">
         <video autoplay loop muted playsinline class="bg-video">
             <source src="video.mp4" type="video/mp4">
@@ -295,13 +317,18 @@
     <nav>
         <a href="#details">Локація</a>
         <a href="#media">Медіа</a>
-        <!-- Changed to участь -->
         <a href="#rsvp">Участь</a>
     </nav>
 
-    <!-- 2. SOLID WHITE HEADER -->
+    <!-- 2. HEADER WITH NEW LEAF VIDEO BACKGROUND -->
     <header>
-        <h1 class="fade-up">Запрошуємо на наше Весілля</h1>
+        <!-- The watercolor background video -->
+        <video autoplay loop muted playsinline class="header-video-bg">
+            <source src="top-video.mp4" type="video/mp4">
+        </video>
+
+        <!-- Changed "Весілля" to "весілля" -->
+        <h1 class="fade-up">Запрошуємо на наше весілля</h1>
         
         <div class="complex-date fade-up">
             <div class="date-side-part"><span class="date-label">ЛИПНЯ</span></div>
@@ -319,6 +346,7 @@
                         <polyline points="14 18, 18 18, 18 14" />
                     </svg>
                 </div>
+                <!-- Clean, non-faded edges for the image -->
                 <img src="IMG_0626.jpg" alt="Ваше спільне фото">
             </div>
             <!-- Caption applied with cursive font -->
@@ -340,7 +368,6 @@
             
             <section id="details" class="fade-up">
                 <h2>Деталі та Локація</h2>
-                <!-- Details updated to use cursive font -->
                 <p class="cursive-text"><strong>Церемонія:</strong> 13:30 | Ресторан "Замок Видубичі"</p>
                 <p class="cursive-text"><strong>Вечеря:</strong> 15:00 | Ресторан "Замок Видубичі"</p>
                 <br>
