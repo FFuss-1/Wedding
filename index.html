@@ -17,7 +17,7 @@
             --primary-dark: #7a8f87; 
             --accent: #e6d6b8;  
             --text: #4a4a4a;    
-            --bg: #ffffff; /* Pure White Screen Base for Top */
+            --bg: #ffffff; /* Pure White Screen Base */
             
             /* Vibrant Button Colors */
             --btn-color: #e88b9c; 
@@ -29,12 +29,30 @@
 
         body {
             font-family: 'Playfair Display', Georgia, serif;
-            background-color: var(--bg);
             color: var(--text);
             line-height: 1.6;
             text-align: center;
             position: relative;
             overflow-x: hidden;
+            /* Remove body background color so it doesn't hide the video */
+            background-color: transparent; 
+        }
+
+        /* --- 1. FIXED VIDEO BACKGROUND --- */
+        .fixed-video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1; /* Locked behind absolutely everything */
+            background-color: #e6e6e6; /* Placeholder while video loads */
+        }
+        
+        .bg-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         /* --- SCROLL ANIMATIONS FOR TEXT --- */
@@ -77,16 +95,17 @@
         }
         nav a:hover { background-color: var(--primary); color: white; border-color: var(--primary); }
 
-        /* Header & Interactive Photo */
+        /* --- 2. SOLID WHITE HEADER --- */
         header {
             padding: 60px 20px 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
-            background-color: var(--bg); /* Ensures header is on white screen */
+            background-color: var(--bg); /* Solid white block that covers the video entirely at the top */
             position: relative;
-            z-index: 3;
+            z-index: 2;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* Slight shadow to separate it from the video section */
         }
 
         .photo-container {
@@ -101,7 +120,7 @@
             width: 100%;
             max-width: 350px;
             height: auto;
-            /* Reduced softness: inner 85% is solid, only the outer 15% fades softly */
+            /* Firm photo with only a slight soft fade on the outer 15% */
             -webkit-mask-image: radial-gradient(ellipse closest-side, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
             mask-image: radial-gradient(ellipse closest-side, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
             transition: transform 0.3s ease;
@@ -159,49 +178,26 @@
             margin: 0 auto;
         }
 
-        /* --- NEW PINNED VIDEO PARALLAX SECTION --- */
-        .video-background-section {
+        /* --- 3. SCROLLING CONTENT WRAPPER (Glides over the fixed video) --- */
+        .scrolling-content-wrapper {
             position: relative;
-            width: 100%;
-        }
-
-        .video-sticky {
-            position: sticky;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh; /* Takes full screen while pinned */
-            z-index: 1;
-            overflow: hidden;
-            background-color: #e6e6e6; /* Placeholder color before video loads */
-        }
-
-        .bg-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* --- WHITE BOX COMPONENT (Glides over the video) --- */
-        .content-box-wrapper {
-            position: relative;
-            z-index: 2;
+            z-index: 2; /* Sits above the fixed video */
             width: 100%;
             display: flex;
             justify-content: center;
-            padding: 0 15px 80px 15px;
-            /* Negative margin makes the white box peek out just as the video locks into place */
-            margin-top: -10vh; 
+            padding: 60px 15px 100px 15px;
+            /* Transparent background so the video shows through */
+            background-color: transparent; 
         }
 
         .content-box {
-            background-color: rgba(255, 255, 255, 0.5); /* 50% opacity */
+            background-color: rgba(255, 255, 255, 0.5); /* 50% white opacity */
             border-radius: 30px; /* Round shapes */
             width: 100%;
-            max-width: 350px; /* Width as photo */
+            max-width: 350px; /* Width matching the photo */
             padding: 40px 20px;
             backdrop-filter: blur(8px); /* Softens the video slightly behind the text */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
 
         .content-box section { padding: 25px 0; max-width: 100%; margin: 0 auto; }
@@ -258,6 +254,13 @@
 </head>
 <body>
 
+    <!-- 1. THE FIXED VIDEO BACKGROUND (Always stays still in the very back) -->
+    <div class="fixed-video-bg">
+        <video autoplay loop muted playsinline class="bg-video">
+            <source src="video.mp4" type="video/mp4">
+        </video>
+    </div>
+
     <!-- Top Navigation Menu -->
     <nav>
         <a href="#details">Локація</a>
@@ -265,9 +268,8 @@
         <a href="#rsvp">RSVP</a>
     </nav>
 
-    <!-- White Top Header Section -->
+    <!-- 2. SOLID WHITE HEADER (Covers the video at the very top of the page) -->
     <header>
-        <!-- Interactive Photo Container -->
         <div class="photo-container" id="photoContainer">
             <img src="IMG_0626.jpg" alt="Ваше спільне фото">
             <p class="photo-caption" id="photoCaption">Це наше перше спільне фото, яке стало особливою частиною нашого весільного запрошення, хоча тоді ми про це навіть не здогадувалися🥰</p>
@@ -281,7 +283,6 @@
             <div class="date-side-part"><span class="date-label">НЕДІЛЯ</span></div>
         </div>
         
-        <!-- Text updated to use cursive font -->
         <p class="fade-up cursive-text">З нетерпінням чекаємо на святкування разом з вами!</p>
         
         <div id="countdown" class="fade-up">
@@ -291,76 +292,63 @@
         </div>
     </header>
 
-    <!-- PINNED VIDEO PARALLAX SECTION -->
-    <div class="video-background-section">
-        
-        <!-- The Sticky Video Container -->
-        <div class="video-sticky">
-            <video autoplay loop muted playsinline class="bg-video">
-                <source src="video.mp4" type="video/mp4">
-            </video>
-        </div>
-        
-        <!-- The Translucent White Box that glides over the video -->
-        <div class="content-box-wrapper">
-            <div class="content-box">
-                
-                <section id="details" class="fade-up">
-                    <h2>Деталі та Локація</h2>
-                    <p style="font-family: serif;"><strong>Церемонія:</strong> 13:30 | Ресторан "Замок Видубичі"</p>
-                    <p style="font-family: serif;"><strong>Вечеря:</strong> 15:00 | Ресторан "Замок Видубичі"</p>
-                    <br>
-                    <a href="https://www.google.com/maps/place/Castle+Vidubichi/@50.4168956,30.570776,15.96z/data=!4m6!3m5!1s0x40d4cf7d0ebc02af:0xdebd0df32742a2b1!8m2!3d50.4181102!4d30.5752806!16s%2Fg%2F1vg4h9tj?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="link-btn">Відкрити на Картах</a>
-                </section>
+    <!-- 3. SCROLLING CONTENT SECTION (The white box glides over the video here) -->
+    <main class="scrolling-content-wrapper">
+        <div class="content-box">
+            
+            <section id="details" class="fade-up">
+                <h2>Деталі та Локація</h2>
+                <p style="font-family: serif;"><strong>Церемонія:</strong> 13:30 | Ресторан "Замок Видубичі"</p>
+                <p style="font-family: serif;"><strong>Вечеря:</strong> 15:00 | Ресторан "Замок Видубичі"</p>
+                <br>
+                <a href="https://www.google.com/maps/place/Castle+Vidubichi/@50.4168956,30.570776,15.96z/data=!4m6!3m5!1s0x40d4cf7d0ebc02af:0xdebd0df32742a2b1!8m2!3d50.4181102!4d30.5752806!16s%2Fg%2F1vg4h9tj?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="link-btn">Відкрити на Картах</a>
+            </section>
 
-                <section id="media" class="fade-up">
-                    <h2>Медіа</h2>
-                    <!-- Text updated to use cursive font -->
-                    <p class="cursive-text">Найкращі моменти — це ті, які ми розділяємо разом. Ми будемо дуже вдячні, якщо ви поділитеся всіма фотографіями та відео, які зробите в наш особливий день!</p>
-                    <br>
-                    <a href="https://drive.google.com/drive/folders/1TdL_vouEdWwG9FGBhr-_-jK7kuXycmUR?usp=sharing" target="_blank" class="link-btn">Завантажити фото</a>
-                </section>
+            <section id="media" class="fade-up">
+                <h2>Медіа</h2>
+                <p class="cursive-text">Найкращі моменти — це ті, які ми розділяємо разом. Ми будемо дуже вдячні, якщо ви поділитеся всіма фотографіями та відео, які зробите в наш особливий день!</p>
+                <br>
+                <a href="https://drive.google.com/drive/folders/1TdL_vouEdWwG9FGBhr-_-jK7kuXycmUR?usp=sharing" target="_blank" class="link-btn">Завантажити фото</a>
+            </section>
 
-                <section id="wishes" class="fade-up">
-                    <h2>Побажання</h2>
-                    <!-- Text kept in cursive font -->
-                    <p class="cursive-text">Просимо вас не дарувати нам квіти, адже ми не встигнемо насолодитися їхньою красою перед поїздкою. Але донату на притулок для тваринок будемо дуже раді ❤️</p>
-                    <br>
-                    <a href="#" target="_blank" class="link-btn">Донат на притулок</a>
-                </section>
+            <section id="wishes" class="fade-up">
+                <h2>Побажання</h2>
+                <p class="cursive-text">Просимо вас не дарувати нам квіти, адже ми не встигнемо насолодитися їхньою красою перед поїздкою. Але донату на притулок для тваринок будемо дуже раді ❤️</p>
+                <br>
+                <a href="#" target="_blank" class="link-btn">Донат на притулок</a>
+            </section>
 
-                <section id="rsvp" class="fade-up">
-                    <h2>Підтвердження участі</h2>
-                    <form id="rsvpForm">
-                        <div id="guestList">
-                            <div class="guest-entry">
-                                <hr class="guest-separator">
-                                <div class="form-group">
-                                    <label>Ім'я</label>
-                                    <input type="text" class="guest-name" required placeholder="Ваше ім'я">
-                                </div>
-                                <div class="form-group">
-                                    <label>Чи зможете ви прийти?</label>
-                                    <select class="guest-attendance" required>
-                                        <option value="">Оберіть варіант</option>
-                                        <option value="Із радістю прийду">Із радістю прийду</option>
-                                        <option value="На жаль, не зможу">На жаль, не зможу</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Алкоголь, якому ви надаєте перевагу</label>
-                                    <textarea class="guest-alcohol" rows="2" placeholder="біле сухе вино, віскі, тощо"></textarea>
-                                </div>
+            <section id="rsvp" class="fade-up">
+                <h2>Підтвердження участі</h2>
+                <form id="rsvpForm">
+                    <div id="guestList">
+                        <div class="guest-entry">
+                            <hr class="guest-separator">
+                            <div class="form-group">
+                                <label>Ім'я</label>
+                                <input type="text" class="guest-name" required placeholder="Ваше ім'я">
+                            </div>
+                            <div class="form-group">
+                                <label>Чи зможете ви прийти?</label>
+                                <select class="guest-attendance" required>
+                                    <option value="">Оберіть варіант</option>
+                                    <option value="Із радістю прийду">Із радістю прийду</option>
+                                    <option value="На жаль, не зможу">На жаль, не зможу</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Алкоголь, якому ви надаєте перевагу</label>
+                                <textarea class="guest-alcohol" rows="2" placeholder="біле сухе вино, віскі, тощо"></textarea>
                             </div>
                         </div>
+                    </div>
 
-                        <button type="button" id="addGuestBtn" class="secondary-btn">+ Додати гостя</button>
-                        <button type="submit" id="submitBtn">Відправити</button>
-                    </form>
-                </section>
-            </div>
+                    <button type="button" id="addGuestBtn" class="secondary-btn">+ Додати гостя</button>
+                    <button type="submit" id="submitBtn">Відправити</button>
+                </form>
+            </section>
         </div>
-    </div>
+    </main>
 
     <script>
         // --- PHOTO CLICK ANIMATION ---
