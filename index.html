@@ -38,6 +38,16 @@
             background-color: transparent; 
         }
 
+        /* --- SUBTLE 3D DROP SHADOW FOR ALL TEXT --- */
+        h1, h2, p, label, span, .date-day, .date-year, .date-label, .time-box span, .time-box label, .hint-text {
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.15);
+        }
+
+        /* Explicitly remove text-shadow from buttons to keep them clean */
+        nav a, button, .link-btn, .secondary-btn {
+            text-shadow: none !important;
+        }
+
         /* --- 1. FIXED VIDEO BACKGROUND (Parallax bottom video) --- */
         .fixed-video-bg {
             position: fixed;
@@ -111,7 +121,8 @@
             z-index: 2;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
             overflow: hidden; 
-            background-color: transparent; 
+            /* Solid white background added to fix the top gap! */
+            background-color: #ffffff; 
         }
 
         /* The watercolor background video */
@@ -125,14 +136,10 @@
             z-index: 0; 
         }
 
-        /* 
-          YOUR FIX: Rotating the video specifically for mobile phones. 
-          This forces the leaves to perfectly frame the top and bottom of the tall screen!
-        */
         @media (max-width: 768px) {
             .header-video-bg {
-                width: 150vh; /* Becomes visual height after rotation */
-                height: 100vw; /* Becomes visual width after rotation */
+                width: 150vh; 
+                height: 150vw; 
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%) rotate(90deg);
@@ -163,7 +170,7 @@
 
         h1 { font-size: 2.8rem; color: var(--text); margin: 10px 0; }
 
-        /* Date Styling */
+        /* Date Styling - Lines removed! */
         .complex-date {
             display: flex;
             justify-content: center;
@@ -172,9 +179,8 @@
             margin: 10px 0 30px;
             font-family: serif;
         }
-        .date-side-part { position: relative; display: flex; align-items: center; flex-grow: 0; width: 100px; justify-content: center; }
-        .date-side-part .date-label { font-size: 0.8rem; letter-spacing: 2px; color: var(--text); text-transform: uppercase; position: relative; z-index: 1; padding: 0 10px; background: transparent; border-radius: 4px; }
-        .date-side-part::before { content: ''; position: absolute; left: 0; top: 50%; height: 1px; width: 100%; background-color: var(--accent); transform: translateY(-50%); z-index: 0; }
+        .date-side-part { display: flex; align-items: center; justify-content: center; }
+        .date-side-part .date-label { font-size: 0.8rem; letter-spacing: 2px; color: var(--text); text-transform: uppercase; }
         .date-main-part { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
         .date-main-part .date-day { font-size: 3.5rem; font-weight: bold; color: var(--text); }
         .date-main-part .date-year { font-size: 1rem; font-style: italic; color: var(--text); opacity: 0.8; margin-top: -5px; }
@@ -193,18 +199,18 @@
             display: inline-block;
         }
 
-        /* Oval softness removed entirely - borders are now clean and crisp */
         .photo-container img {
             width: 100%;
             max-width: 350px;
             height: auto;
             border-radius: 10px; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15); 
+            /* Added 3D drop shadow to the photo */
+            box-shadow: 3px 5px 15px rgba(0,0,0,0.25); 
             transition: transform 0.3s ease;
         }
         .photo-container img:hover { transform: scale(1.02); }
 
-        /* The "Тиць тут" hint */
+        /* The "Тиць тут" hint - Updated to dark color */
         .click-hint {
             position: absolute;
             top: 20px;
@@ -215,13 +221,13 @@
             gap: 5px;
             pointer-events: none; 
             transform: rotate(-10deg); 
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.6); 
         }
         .click-hint svg {
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.6));
+            stroke: var(--text); /* Dark arrow */
+            filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.15)); /* Tiny 3d shadow for arrow */
         }
         .click-hint .hint-text {
-            color: #ffffff;
+            color: var(--text); /* Dark text */
             font-size: 1.5rem;
             margin: 0;
             line-height: 1;
@@ -265,13 +271,15 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            padding: 60px 15px 100px 15px;
+            /* Top padding removed entirely to fix the gap below the header */
+            padding: 0 15px 100px 15px;
             background-color: transparent; 
         }
 
         .content-box {
             background-color: rgba(255, 255, 255, 0.5); 
-            border-radius: 30px; 
+            /* Flat top corners to blend seamlessly into the header */
+            border-radius: 0 0 30px 30px; 
             width: 100%;
             max-width: 350px; 
             padding: 40px 20px;
@@ -369,12 +377,11 @@
             <div class="photo-wrapper">
                 <div class="click-hint">
                     <span class="cursive-text hint-text">тиць тут</span>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M8 4 C 8 10, 12 16, 18 18" />
                         <polyline points="14 18, 18 18, 18 14" />
                     </svg>
                 </div>
-                <!-- Clean, non-faded edges for the image -->
                 <img src="IMG_0626.jpg" alt="Ваше спільне фото">
             </div>
             <p class="photo-caption cursive-text" id="photoCaption">Це наше перше спільне фото, яке стало особливою частиною нашого весільного запрошення, хоча тоді ми про це навіть не здогадувалися🥰</p>
