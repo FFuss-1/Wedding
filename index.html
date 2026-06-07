@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 
     <style>
-        /* PASTEL AIRY PALETTE WITH COLORFUL BUTTONS */
+        /* PASTEL AIRY PALETTE WITH GREEN BUTTONS */
         :root {
             --primary: #b9c9c3; 
             --primary-dark: #7a8f87; 
@@ -19,9 +19,10 @@
             --text: #4a4a4a;    
             --bg: #ffffff; /* Pure White Screen Base */
             
-            /* Vibrant Button Colors */
-            --btn-color: #e88b9c; 
-            --btn-hover: #d66b7d; 
+            /* Unified Sage Green Button Colors */
+            --btn-color: #8fa69a; 
+            --btn-hover: #728a7e; 
+            --btn-shadow: rgba(143, 166, 154, 0.4);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,7 +35,6 @@
             text-align: center;
             position: relative;
             overflow-x: hidden;
-            /* Remove body background color so it doesn't hide the video */
             background-color: transparent; 
         }
 
@@ -45,8 +45,8 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            z-index: -1; /* Locked behind absolutely everything */
-            background-color: #e6e6e6; /* Placeholder while video loads */
+            z-index: -1; 
+            background-color: #e6e6e6; 
         }
         
         .bg-video {
@@ -82,18 +82,23 @@
         }
         nav a {
             text-decoration: none;
-            color: var(--primary-dark);
+            background-color: var(--btn-color);
+            color: #ffffff;
             font-weight: bold;
-            border: 2px solid var(--primary);
-            padding: 8px 20px;
-            border-radius: 4px;
+            padding: 8px 25px;
+            border-radius: 20px;
             transition: all 0.3s;
             font-family: sans-serif;
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            box-shadow: 0 4px 10px var(--btn-shadow);
         }
-        nav a:hover { background-color: var(--primary); color: white; border-color: var(--primary); }
+        nav a:hover { 
+            background-color: var(--btn-hover); 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px var(--btn-shadow);
+        }
 
         /* --- 2. SOLID WHITE HEADER --- */
         header {
@@ -102,49 +107,13 @@
             flex-direction: column;
             align-items: center;
             gap: 15px;
-            background-color: var(--bg); /* Solid white block that covers the video entirely at the top */
+            background-color: var(--bg); 
             position: relative;
             z-index: 2;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* Slight shadow to separate it from the video section */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
         }
 
-        .photo-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer; 
-            margin-bottom: 20px;
-        }
-
-        .photo-container img {
-            width: 100%;
-            max-width: 350px;
-            height: auto;
-            /* Firm photo with only a slight soft fade on the outer 15% */
-           
-            transition: transform 0.3s ease;
-        }
-        .photo-container img:hover { transform: scale(1.02); }
-
-        .photo-caption {
-            font-size: 0.95rem;
-            max-width: 350px;
-            font-style: italic;
-            color: var(--primary-dark);
-            opacity: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-top: 0;
-            padding: 0 15px;
-        }
-        .photo-caption.show {
-            opacity: 1;
-            max-height: 150px; 
-            margin-top: 15px;
-        }
-
-        h1 { font-size: 2.8rem; color: var(--primary-dark); margin: 10px 0; }
+        h1 { font-size: 2.8rem; color: var(--text); margin: 10px 0; }
 
         /* Date Styling */
         .complex-date {
@@ -159,8 +128,71 @@
         .date-side-part .date-label { font-size: 0.8rem; letter-spacing: 2px; color: var(--text); text-transform: uppercase; position: relative; z-index: 1; padding: 0 10px; background: var(--bg); }
         .date-side-part::before { content: ''; position: absolute; left: 0; top: 50%; height: 1px; width: 100%; background-color: var(--accent); transform: translateY(-50%); z-index: 0; }
         .date-main-part { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
-        .date-main-part .date-day { font-size: 3.5rem; font-weight: bold; color: var(--primary-dark); }
+        .date-main-part .date-day { font-size: 3.5rem; font-weight: bold; color: var(--text); }
         .date-main-part .date-year { font-size: 1rem; font-style: italic; color: var(--text); opacity: 0.8; margin-top: -5px; }
+
+        /* Interactive Photo Styling */
+        .photo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer; 
+            margin-bottom: 20px;
+        }
+
+        .photo-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .photo-container img {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            -webkit-mask-image: radial-gradient(ellipse closest-side, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+            mask-image: radial-gradient(ellipse closest-side, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+            transition: transform 0.3s ease;
+        }
+        .photo-container img:hover { transform: scale(1.02); }
+
+        /* The "Тиць тут" hint */
+        .click-hint {
+            position: absolute;
+            top: 20px;
+            left: 10px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            pointer-events: none; 
+            transform: rotate(-10deg); 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6); 
+        }
+        .click-hint svg {
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.6));
+        }
+        .click-hint .hint-text {
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin: 0;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .photo-caption {
+            max-width: 350px;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 0;
+            padding: 0 15px;
+        }
+        .photo-caption.show {
+            opacity: 1;
+            max-height: 200px; 
+            margin-top: 15px;
+        }
 
         #countdown { display: flex; justify-content: center; gap: 10px; margin: 20px auto; max-width: 450px; }
         .time-box { background: rgba(255,255,255,0.7); padding: 15px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); flex: 1; border: 1px solid rgba(230, 214, 184, 0.3); }
@@ -177,25 +209,24 @@
             margin: 0 auto;
         }
 
-        /* --- 3. SCROLLING CONTENT WRAPPER (Glides over the fixed video) --- */
+        /* --- 3. SCROLLING CONTENT WRAPPER --- */
         .scrolling-content-wrapper {
             position: relative;
-            z-index: 2; /* Sits above the fixed video */
+            z-index: 2; 
             width: 100%;
             display: flex;
             justify-content: center;
             padding: 60px 15px 100px 15px;
-            /* Transparent background so the video shows through */
             background-color: transparent; 
         }
 
         .content-box {
-            background-color: rgba(255, 255, 255, 0.5); /* 50% white opacity */
-            border-radius: 30px; /* Round shapes */
+            background-color: rgba(255, 255, 255, 0.5); 
+            border-radius: 30px; 
             width: 100%;
-            max-width: 350px; /* Width matching the photo */
+            max-width: 350px; 
             padding: 40px 20px;
-            backdrop-filter: blur(8px); /* Softens the video slightly behind the text */
+            backdrop-filter: blur(8px); 
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
 
@@ -208,10 +239,10 @@
         input, select, textarea { width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.6); border-radius: 6px; font-family: sans-serif; background: rgba(255,255,255,0.85); transition: border-color 0.3s; }
         input:focus, select:focus, textarea:focus { outline: none; border-color: var(--btn-color); }
         
-        /* Vibrant Buttons */
+        /* Unified Buttons */
         button, .link-btn {
             background-color: var(--btn-color); 
-            color: white; 
+            color: #ffffff; 
             padding: 14px 20px; 
             border: none; 
             border-radius: 30px; 
@@ -220,7 +251,7 @@
             transition: all 0.3s; 
             text-decoration: none; 
             display: inline-block; 
-            box-shadow: 0 4px 10px rgba(232, 139, 156, 0.3); 
+            box-shadow: 0 4px 10px var(--btn-shadow); 
             font-family: sans-serif; 
             font-weight: bold; 
             letter-spacing: 1px; 
@@ -230,7 +261,7 @@
         button:hover, .link-btn:hover { 
             background-color: var(--btn-hover); 
             transform: translateY(-2px); 
-            box-shadow: 0 6px 15px rgba(232, 139, 156, 0.4); 
+            box-shadow: 0 6px 15px var(--btn-shadow); 
         }
 
         .secondary-btn { 
@@ -243,7 +274,7 @@
         }
         .secondary-btn:hover { 
             background-color: var(--btn-color); 
-            color: white; 
+            color: #ffffff; 
             transform: none; 
             box-shadow: none; 
         }
@@ -253,7 +284,7 @@
 </head>
 <body>
 
-    <!-- 1. THE FIXED VIDEO BACKGROUND (Always stays still in the very back) -->
+    <!-- 1. THE FIXED VIDEO BACKGROUND -->
     <div class="fixed-video-bg">
         <video autoplay loop muted playsinline class="bg-video">
             <source src="video.mp4" type="video/mp4">
@@ -264,22 +295,34 @@
     <nav>
         <a href="#details">Локація</a>
         <a href="#media">Медіа</a>
-        <a href="#rsvp">RSVP</a>
+        <!-- Changed to участь -->
+        <a href="#rsvp">Участь</a>
     </nav>
 
-    <!-- 2. SOLID WHITE HEADER (Covers the video at the very top of the page) -->
+    <!-- 2. SOLID WHITE HEADER -->
     <header>
-        <div class="photo-container" id="photoContainer">
-            <img src="IMG_0626.jpg" alt="Ваше спільне фото">
-            <p class="photo-caption" id="photoCaption">Це наше перше спільне фото, яке стало особливою частиною нашого весільного запрошення, хоча тоді ми про це навіть не здогадувалися🥰</p>
-        </div>
-        
         <h1 class="fade-up">Запрошуємо на наше Весілля</h1>
         
         <div class="complex-date fade-up">
             <div class="date-side-part"><span class="date-label">ЛИПНЯ</span></div>
             <div class="date-main-part"><span class="date-day">19</span><span class="date-year">2026</span></div>
             <div class="date-side-part"><span class="date-label">НЕДІЛЯ</span></div>
+        </div>
+
+        <div class="photo-container fade-up" id="photoContainer">
+            <div class="photo-wrapper">
+                <!-- Hint Box overlay -->
+                <div class="click-hint">
+                    <span class="cursive-text hint-text">тиць тут</span>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 4 C 8 10, 12 16, 18 18" />
+                        <polyline points="14 18, 18 18, 18 14" />
+                    </svg>
+                </div>
+                <img src="Subject.jpg" alt="Ваше спільне фото">
+            </div>
+            <!-- Caption applied with cursive font -->
+            <p class="photo-caption cursive-text" id="photoCaption">Це наше перше спільне фото, яке стало особливою частиною нашого весільного запрошення, хоча тоді ми про це навіть не здогадувалися🥰</p>
         </div>
         
         <p class="fade-up cursive-text">З нетерпінням чекаємо на святкування разом з вами!</p>
@@ -291,14 +334,15 @@
         </div>
     </header>
 
-    <!-- 3. SCROLLING CONTENT SECTION (The white box glides over the video here) -->
+    <!-- 3. SCROLLING CONTENT SECTION -->
     <main class="scrolling-content-wrapper">
         <div class="content-box">
             
             <section id="details" class="fade-up">
                 <h2>Деталі та Локація</h2>
-                <p style="font-family: serif;"><strong>Церемонія:</strong> 13:30 | Ресторан "Замок Видубичі"</p>
-                <p style="font-family: serif;"><strong>Вечеря:</strong> 15:00 | Ресторан "Замок Видубичі"</p>
+                <!-- Details updated to use cursive font -->
+                <p class="cursive-text"><strong>Церемонія:</strong> 13:30 | Ресторан "Замок Видубичі"</p>
+                <p class="cursive-text"><strong>Вечеря:</strong> 15:00 | Ресторан "Замок Видубичі"</p>
                 <br>
                 <a href="https://www.google.com/maps/place/Castle+Vidubichi/@50.4168956,30.570776,15.96z/data=!4m6!3m5!1s0x40d4cf7d0ebc02af:0xdebd0df32742a2b1!8m2!3d50.4181102!4d30.5752806!16s%2Fg%2F1vg4h9tj?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="link-btn">Відкрити на Картах</a>
             </section>
@@ -356,6 +400,9 @@
         
         photoContainer.addEventListener('click', function() {
             photoCaption.classList.toggle('show');
+            // Hide the 'тиць тут' hint once they discover the caption
+            const hint = document.querySelector('.click-hint');
+            if (hint) { hint.style.opacity = '0'; hint.style.transition = 'opacity 0.3s'; }
         });
 
         // --- SCROLL ANIMATION OBSERVER ---
