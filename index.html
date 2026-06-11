@@ -127,6 +127,8 @@
             gap: 15px;
             position: relative;
             z-index: 2;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            overflow: hidden; 
             background-color: transparent; 
         }
 
@@ -152,7 +154,7 @@
             width: 100%;
             height: 600px; 
             z-index: 1;
-            /* Eliminates strict lines by gently fading the top 10% and bottom 40% of the video */
+            /* Gentle fade effect on the top and bottom edges */
             -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
             mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
         }
@@ -165,7 +167,6 @@
 
         @media (max-width: 768px) {
             .header-video-bg {
-                /* Matching the container size exactly ensures the rotation never leaves sharp cropped edges */
                 width: 600px; 
                 height: 100vw; 
                 top: 50%;
@@ -175,7 +176,7 @@
             }
         }
 
-        /* Elevates all the text and the photo above the fading background */
+        /* Elevates content above the video layers */
         header > h1, 
         header > .calendar-wrapper, 
         header > .photo-container, 
@@ -192,7 +193,7 @@
             margin: 5px auto 25px;
             width: 100%;
             max-width: 320px;
-            background: rgba(255, 255, 255, 0.5); /* Soft, glassy background */
+            background: rgba(255, 255, 255, 0.5); 
             padding: 20px;
             border-radius: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
@@ -232,7 +233,6 @@
             position: relative;
             z-index: 1;
         }
-        /* Pastel Pink Heart for July 19th */
         .special-day {
             color: #ffffff !important;
             font-weight: bold;
@@ -266,7 +266,6 @@
         }
         .photo-container img:hover { transform: scale(1.02); }
 
-        /* The "Тиць тут" hint - Moved safely above photo */
         .click-hint {
             position: absolute;
             top: -45px; 
@@ -331,7 +330,7 @@
         }
 
         .content-box {
-            background-color: rgba(255, 255, 255, 0.8); /* Matches the 20% transparent theme */
+            background-color: rgba(255, 255, 255, 0.8); 
             border-radius: 30px; 
             width: 100%;
             max-width: 350px; 
@@ -402,6 +401,7 @@
 
     <nav id="mainNav">
         <a href="#details">Локація</a>
+        <a href="#seating">Розсадка</a>
         <a href="#media">Медіа</a>
         <a href="#rsvp">Участь</a>
     </nav>
@@ -462,6 +462,11 @@
                 <a href="https://www.google.com/maps/place/Castle+Vidubichi/@50.4168956,30.570776,15.96z/data=!4m6!3m5!1s0x40d4cf7d0ebc02af:0xdebd0df32742a2b1!8m2!3d50.4181102!4d30.5752806!16s%2Fg%2F1vg4h9tj?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="link-btn">Відкрити на Картах</a>
             </section>
 
+            <section id="seating" class="fade-up">
+                <h2>План розсадки</h2>
+                <p class="cursive-text">Тут з'явиться детальний план розсадки гостей, щоб кожен почувався максимально затишно. Інформація буде опублікована безпосередньо перед днем весілля ✨</p>
+            </section>
+
             <section id="media" class="fade-up">
                 <h2>Медіа</h2>
                 <p class="cursive-text">Найкращі моменти — це ті, які ми розділяємо разом. Ми будемо дуже вдячні, якщо ви поділитеся всіма фотографіями та відео, які зробите в наш особливий день!</p>
@@ -471,9 +476,10 @@
 
             <section id="wishes" class="fade-up">
                 <h2>Побажання</h2>
-                <p class="cursive-text">Просимо вас не дарувати нам квіти, адже ми не встигнемо насолодитися їхньою красою перед поїздкою. Але донату на притулок для тваринок будемо дуже раді ❤️</p>
+                <p class="cursive-text">Просимо вас не дарувати нам квіти, адже ми не встигнемо насолодитися їхньою красою перед поїздкою. Але донату на підтримку Збройних Сил України будемо дуже раді ❤️</p>
+                <p class="cursive-text" style="font-size: 1.1rem; margin-top: 10px; opacity: 0.85;">(Посилання на офіційний збір з'явиться безпосередньо перед днем весілля)</p>
                 <br>
-                <a href="#" target="_blank" class="link-btn">Донат на притулок</a>
+                <button type="button" class="link-btn" onclick="alert('Посилання на збір буде додано безпосередньо перед днем весілля!')">Донат на ЗСУ</button>
             </section>
 
             <section id="rsvp" class="fade-up">
