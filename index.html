@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Наше весілля - 19 Липня 2026</title>
     
+    <!-- Import elegant cursive font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
@@ -268,14 +269,14 @@
 
         .click-hint {
             position: absolute;
-            top: -45px; 
-            left: 30px;
+            bottom: -35px; /* Safely placed underneath the photo */
+            right: 20px;
             z-index: 10;
             display: flex;
             align-items: center;
             gap: 8px;
             pointer-events: none; 
-            transform: rotate(8deg); 
+            transform: rotate(-5deg); 
         }
         .click-hint svg {
             filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.15));
@@ -393,12 +394,14 @@
 </head>
 <body>
 
+    <!-- 1. THE FIXED VIDEO BACKGROUND (Parallax bottom video) -->
     <div class="fixed-video-bg">
         <video autoplay loop muted playsinline class="bg-video">
             <source src="video.mp4" type="video/mp4">
         </video>
     </div>
 
+    <!-- Top Navigation Menu -->
     <nav id="mainNav">
         <a href="#details">Локація</a>
         <a href="#seating">Розсадка</a>
@@ -406,6 +409,7 @@
         <a href="#rsvp">Участь</a>
     </nav>
 
+    <!-- 2. HEADER WITH FADING BACKGROUNDS -->
     <header>
         <div class="header-solid-bg"></div>
 
@@ -415,8 +419,9 @@
             </video>
         </div>
 
-        <h1 class="fade-up">Запрошуємо на наше весілля</h1>
+        <h1 class="fade-up">Запрошуємо на наше весілля 👰🏻‍♀️🤵🏻‍♂️</h1>
         
+        <!-- NARROW CALENDAR WIDGET (Single week view) -->
         <div class="calendar-wrapper fade-up">
             <div class="calendar-month">Липень 2026</div>
             <div class="calendar-grid">
@@ -431,11 +436,12 @@
         <div class="photo-container fade-up" id="photoContainer">
             <div class="photo-wrapper">
                 <div class="click-hint">
-                    <span class="cursive-text hint-text">тиць тут</span>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M8 4 C 8 10, 12 16, 18 18" />
-                        <polyline points="14 18, 18 18, 18 14" />
+                        <!-- Curved arrow pointing Up-Left at the photo -->
+                        <path d="M16 20 Q 16 10 6 6" />
+                        <polyline points="11 5, 6 6, 7 11" />
                     </svg>
+                    <span class="cursive-text hint-text">тиць тут</span>
                 </div>
                 <img src="IMG_0626.jpg" alt="Ваше спільне фото">
             </div>
@@ -451,6 +457,7 @@
         </div>
     </header>
 
+    <!-- 3. SCROLLING CONTENT SECTION -->
     <main class="scrolling-content-wrapper">
         <div class="content-box">
             
@@ -462,6 +469,7 @@
                 <a href="https://www.google.com/maps/place/Castle+Vidubichi/@50.4168956,30.570776,15.96z/data=!4m6!3m5!1s0x40d4cf7d0ebc02af:0xdebd0df32742a2b1!8m2!3d50.4181102!4d30.5752806!16s%2Fg%2F1vg4h9tj?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="link-btn">Відкрити на Картах</a>
             </section>
 
+            <!-- SEATING PLAN SECTION -->
             <section id="seating" class="fade-up">
                 <h2>План розсадки</h2>
                 <p class="cursive-text">Тут з'явиться детальний план розсадки гостей, щоб кожен почувався максимально затишно. Інформація буде опублікована безпосередньо перед днем весілля ✨</p>
@@ -469,11 +477,12 @@
 
             <section id="media" class="fade-up">
                 <h2>Медіа</h2>
-                <p class="cursive-text">Найкращі моменти — це ті, які ми розділяємо разом. Ми будемо дуже вдячні, якщо ви поділитеся всіма фотографіями та відео, які зробите в наш особливий день!</p>
+                <p class="cursive-text">Найкращі моменти — це ті, які ми розділяємо разом. Ми будемо дуже вдячні, якщо ви поділитеся всіма фотографіями та відео, які зробите в наш особливий день! 📷📹</p>
                 <br>
                 <a href="https://drive.google.com/drive/folders/1TdL_vouEdWwG9FGBhr-_-jK7kuXycmUR?usp=sharing" target="_blank" class="link-btn">Завантажити фото</a>
             </section>
 
+            <!-- WISHLIST / DONATION SECTION -->
             <section id="wishes" class="fade-up">
                 <h2>Побажання</h2>
                 <p class="cursive-text">Просимо вас не дарувати нам квіти, адже ми не встигнемо насолодитися їхньою красою перед поїздкою. Але донату на підтримку Збройних Сил України будемо дуже раді ❤️</p>
