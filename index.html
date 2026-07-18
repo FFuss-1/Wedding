@@ -8,7 +8,7 @@
     <!-- Import elegant cursive font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
         /* PASTEL AIRY PALETTE WITH GREEN BUTTONS */
@@ -269,7 +269,7 @@
 
         .click-hint {
             position: absolute;
-            bottom: -35px; /* Safely placed underneath the photo */
+            bottom: -35px; 
             right: 20px;
             z-index: 10;
             display: flex;
@@ -319,32 +319,29 @@
             margin: 0 auto;
         }
 
-        /* --- 3. SCROLLING CONTENT WRAPPER --- */
+        /* --- 3. FULL WIDTH SCROLLING CONTENT SECTION --- */
         .scrolling-content-wrapper {
             position: relative;
             z-index: 2; 
             width: 100%;
             display: flex;
             justify-content: center;
-            padding: 60px 15px 100px 15px;
-            background-color: transparent; 
+            padding: 60px 20px 100px 20px;
+            background-color: rgba(255, 255, 255, 0.8); 
+            backdrop-filter: blur(8px);
         }
 
         .content-box {
-            background-color: rgba(255, 255, 255, 0.65); 
-            border-radius: 30px; 
             width: 100%;
-            max-width: 350px; 
-            padding: 40px 20px;
-            backdrop-filter: blur(8px); 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            max-width: 750px; /* Slightly wider to accommodate the seating grid */
+            padding: 0;
         }
 
-        .content-box section { padding: 25px 0; max-width: 100%; margin: 0 auto; }
-        .content-box h2 { font-size: 1.8rem; margin-bottom: 20px; color: var(--text); position: relative; font-family: 'Playfair Display', serif; }
+        .content-box section { padding: 30px 0; max-width: 100%; margin: 0 auto; }
+        .content-box h2 { font-size: 2rem; margin-bottom: 20px; color: var(--text); position: relative; font-family: 'Playfair Display', serif; }
         .content-box h2::after { content: ''; display: block; width: 40px; height: 2px; background: var(--btn-color); margin: 15px auto 0; }
 
-        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group { margin-bottom: 20px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto; }
         label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text); font-size: 0.9rem; font-family: sans-serif; }
         input, select, textarea { width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.6); border-radius: 6px; font-family: sans-serif; background: rgba(255,255,255,0.85); transition: border-color 0.3s; }
         input:focus, select:focus, textarea:focus { outline: none; border-color: var(--btn-color); }
@@ -367,6 +364,7 @@
             letter-spacing: 1px; 
             text-transform: uppercase;
             width: 100%;
+            max-width: 500px;
         }
         button:hover, .link-btn:hover { 
             background-color: var(--btn-hover); 
@@ -390,6 +388,65 @@
         }
         
         .guest-separator { border: 0; border-top: 1px dashed rgba(0,0,0,0.2); margin: 25px auto; display: none; }
+
+        /* --- SEATING GRID LAYOUT STYLES --- */
+        .seating-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+            margin: 30px auto 0;
+        }
+
+        .table-card {
+            background-color: rgba(255, 255, 255, 0.7); 
+            border-radius: 20px; 
+            padding: 25px 25px 35px 25px;
+            backdrop-filter: blur(10px); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        .table-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .table-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(143, 166, 154, 0.3); 
+            padding-bottom: 10px;
+        }
+
+        .guest-list {
+            list-style-position: inside;
+            padding-left: 0;
+            font-family: sans-serif;
+            font-size: 1rem;
+            color: var(--text);
+            line-height: 2;
+        }
+
+        .guest-list li {
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+            padding-left: 5px;
+        }
+
+        .guest-list li:last-child {
+            border-bottom: none;
+        }
+
+        .empty-seat {
+            color: #a0a0a0;
+            font-style: italic;
+            font-family: 'Caveat', cursive;
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
@@ -443,7 +500,7 @@
                     </svg>
                     <span class="cursive-text hint-text">тиць тут</span>
                 </div>
-                <img src="IMG_0626.jpg" alt="Ваше спільне фото">
+                <img src="Subject.jpg" alt="Ваше спільне фото">
             </div>
             <p class="photo-caption cursive-text" id="photoCaption">Це наше перше спільне фото, яке стало особливою частиною нашого весільного запрошення, хоча тоді ми про це навіть не здогадувалися🥰</p>
         </div>
@@ -457,7 +514,7 @@
         </div>
     </header>
 
-    <!-- 3. SCROLLING CONTENT SECTION -->
+    <!-- 3. FULL WIDTH SCROLLING CONTENT SECTION -->
     <main class="scrolling-content-wrapper">
         <div class="content-box">
             
@@ -469,10 +526,84 @@
                 <a href="https://www.google.com/maps/place/Castle+Vidubichi/@50.4168956,30.570776,15.96z/data=!4m6!3m5!1s0x40d4cf7d0ebc02af:0xdebd0df32742a2b1!8m2!3d50.4181102!4d30.5752806!16s%2Fg%2F1vg4h9tj?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="link-btn">Відкрити на Картах</a>
             </section>
 
-            <!-- SEATING PLAN SECTION -->
+            <!-- INTEGRATED SEATING PLAN SECTION -->
             <section id="seating" class="fade-up">
                 <h2>План розсадки</h2>
-                <p class="cursive-text">Тут з'явиться детальний план розсадки гостей, щоб кожен почувався максимально затишно. Інформація буде опублікована безпосередньо перед днем весілля ✨</p>
+                
+                <div class="seating-grid">
+                    <div class="table-card">
+                        <div class="table-title">Стіл 1</div>
+                        <ol class="guest-list">
+                            <li>Мама Наталія</li>
+                            <li>Тато Вадим</li>
+                            <li>Євгенія Степанівна</li>
+                            <li>Євгенія</li>
+                            <li>Олександр</li>
+                            <li>Хресна Оксана</li>
+                            <li>Ірина</li>
+                            <li>Тетяна</li>
+                            <li>Юрій</li>
+                        </ol>
+                    </div>
+
+                    <div class="table-card">
+                        <div class="table-title">Стіл 2</div>
+                        <ol class="guest-list">
+                            <li>Антон</li>
+                            <li>Софія</li>
+                            <li>Ілля</li>
+                            <li>Вероніка</li>
+                            <li>Ян</li>
+                            <li>Хресний Леонід</li>
+                            <li>Хресна Олена</li>
+                            <li>Валерія</li>
+                            <li>Ольга</li>
+                        </ol>
+                    </div>
+
+                    <div class="table-card">
+                        <div class="table-title">Стіл 3</div>
+                        <ol class="guest-list">
+                            <li>Вікторія</li>
+                            <li>Максим</li>
+                            <li>Анастасія</li>
+                            <li>Олександр</li>
+                            <li>Вадим</li> 
+                            <li>Ілона</li>
+                            <li>Бєлла</li>
+                            <li>Дмитро</li>
+                        </ol>
+                    </div>
+
+                    <div class="table-card">
+                        <div class="table-title">Стіл 4</div>
+                        <ol class="guest-list">
+                            <li>Віктор</li>
+                            <li>Ірина</li>
+                            <li>Денис</li>
+                            <li>Крістіна</li>
+                            <li>Ігор</li>
+                            <li>Наталія</li>
+                            <li>Микита</li>
+                            <li>Марія</li>
+                            <li>Артем</li>
+                        </ol>
+                    </div>
+
+                    <div class="table-card">
+                        <div class="table-title">Стіл 5</div>
+                        <ol class="guest-list">
+                            <li>Катерина</li>
+                            <li>Олесь</li>
+                            <li>Анна</li>
+                            <li>Володимир</li>
+                            <li>Анастасія</li>
+                            <li>Денис</li>
+                            <li>Юлія</li>
+                            <li>Наталія Володимирівна</li>
+                        </ol>
+                    </div>
+                </div>
             </section>
 
             <section id="media" class="fade-up">
